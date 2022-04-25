@@ -35,8 +35,15 @@ async function populate_membership(memID, cusID, memType, memDuration) {
     })
 }
 
-async function populate_billing() {
-    
+async function populate_billing(billID, userID, routingNo, subtotal, total) {
+    const billing = db.collection("billing").doc("test_bill1")
+    await billing.set({
+        "billID": billID,
+        "userID": userID,
+        "routingNo": routingNo,
+        "subtotal": subtotal,
+        "total": total
+    })
 }
 
 async function populate_tickets() {
