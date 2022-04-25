@@ -3,6 +3,80 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 
+const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
+const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
+
+const serviceAccount = require('./project_sdk.json');
+
+initializeApp({
+  credential: cert(serviceAccount)
+});
+
+const db = getFirestore();
+// --- DB Data Population ----
+async function populate_customer(cusID, memID, admin, fname, lname) {
+    const customer = db.collection('user').doc('test_user1');
+    await customer.set({
+        "customerID": cusID,
+        "membershipID": memID,
+        "isAdmin": admin,
+        "customerFName": fname,
+        "customerLName": lname
+    })
+}
+
+async function populate_membership(memID, cusID, memType, memDuration) {
+    const membership = db.collection('membership').doc('test_membership1')
+    await membership.set({
+        "membershipID": memID,
+        "customerID": cusID,
+        "membershipType": memType,
+        "membershipDuration": memDuration
+    })
+}
+
+async function populate_billing(billID, userID, routingNo, subtotal, total) {
+    const billing = db.collection("billing").doc("test_bill1")
+    await billing.set({
+        "billID": billID,
+        "userID": userID,
+        "routingNo": routingNo,
+        "subtotal": subtotal,
+        "total": total
+    })
+}
+
+async function populate_tickets() {
+    
+}
+
+async function populate_pet() {
+    
+}
+
+async function populate_baggage() {
+    
+}
+
+async function populate_flight() {
+    
+}
+
+async function populate_plane() {
+    
+}
+
+async function populate_pilot() {
+    
+}
+// const customer2 = db.collection('user').doc('test_user1');
+// await customer2.set({
+//     customerID: 2,
+//     membershipID: 2,
+//     isAdmin: false,
+//     customerFName: "Sullivan",
+//     customerLName: "Ross"
+// })
 //middleware
 app.use(cors());
 app.use(express.json());
@@ -81,3 +155,7 @@ app.delete("/flight/:id", async (req, res) => {
 app.listen(5000, () => {
     console.log("server has started on port 5000");
 });
+
+populate_customer(1, 1, false, "John", "Doe")
+populate_customer(2, 2, false, "Sullivan", "Ross")
+
