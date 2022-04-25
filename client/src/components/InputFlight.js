@@ -15,7 +15,7 @@ const InputFlight = () => {
             
             window.location = "/";
         } catch (err) {
-            console.log(err);
+            console.error(err.message);
         }
     };
 

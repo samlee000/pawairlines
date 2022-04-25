@@ -1,8 +1,22 @@
-import React, { Fragment, useEffect, useState } from "react";
+import React, { Fragment, useEffect, useState, Button } from "react";
+
+import EditFlight from "./EditFlight";
 
 const ListFlight = () => {
 
     const [flight, setFlight] = useState([]);
+
+    const deleteFlight = async (id) => {
+        try {
+            const deleteFLight = await fetch(`http://localhost:5000/flight/${id}`, {
+                method: "DELETE"
+            });
+
+            setFlight(flight.filter(flights => flights.flight_id !== id));
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
 
     const getFlight = async () => {
         try {
@@ -11,7 +25,7 @@ const ListFlight = () => {
 
             setFlight(jsonData);
         } catch (err) {
-            console.log(err);
+            console.error(err.message);
         }
     };
 
@@ -31,10 +45,14 @@ const ListFlight = () => {
             </thead>
             <tbody>
                 {flight.map(flights => (
-                    <tr>
+                    <tr key={flights.flight_id}>
                         <td>{flights.description}</td>
-                        <td>Edit</td>
-                        <td>Delete</td>
+                        <td>
+                            <EditFlight flights={flights} />
+                        </td>
+                        <td>
+                            <button className="btn btn-danger" onClick={() => deleteFlight(flights.flight_id)}>Delete</button>
+                        </td>
                     </tr>
                 ))}
             </tbody>

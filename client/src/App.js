@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 //components
 import InputFlight from "./components/InputFlight";
 import ListFlight from "./components/ListFlight";
+// import EditFlight from "./components/EditFlight";
 
 
 function App() {
