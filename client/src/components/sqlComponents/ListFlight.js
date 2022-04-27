@@ -8,7 +8,7 @@ const ListFlight = () => {
 
     const deleteFlight = async (id) => {
         try {
-            const deleteFLight = await fetch(`http://localhost:5000/flight/${id}`, {
+            const deleteFLight = await fetch(`http://localhost:4000/flight/${id}`, {
                 method: "DELETE"
             });
 
@@ -20,7 +20,7 @@ const ListFlight = () => {
 
     const getFlight = async () => {
         try {
-            const response = await fetch("http://localhost:5000/flight");
+            const response = await fetch("http://localhost:4000/flight");
             const jsonData = await response.json();
 
             setFlight(jsonData);
