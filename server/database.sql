@@ -1,4 +1,4 @@
-CREATE DATABASE flightslist;
+CREATE DATABASE pawsairline;
 
 CREATE TABLE flights(
     flight_id SERIAL PRIMARY KEY, 
