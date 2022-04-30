@@ -38,6 +38,7 @@ export const Register = () => {
               <Nav.Link href="book">Book A Flight</Nav.Link>
               <Nav.Link href="membership">Membership</Nav.Link>
               <Nav.Link href="flight">Flight Status</Nav.Link>
+              <Nav.Link href="seat">Seat Selection</Nav.Link>
               <NavDropdown title="Register/Login" id="basic-nav-dropdown">
                 <NavDropdown.Item href="register">Register</NavDropdown.Item>
                 <NavDropdown.Item href="login">Login</NavDropdown.Item>

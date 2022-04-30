@@ -1,10 +1,14 @@
-import React from 'react'
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Navbar, Container, Nav, NavDropdown, Button, Card } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "./Seat.css";
+import { MdOutlineChair, MdChair } from 'react-icons/md';
 
-const Membership = () => {
+
+const Seat = () => {
+
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -31,9 +35,6 @@ const Membership = () => {
               <Nav.Link href="flight">Flight Status</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
-                {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
-                <NavDropdown.Item href="login">Login</NavDropdown.Item>
-                <NavDropdown.Divider /> */}
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -43,11 +44,20 @@ const Membership = () => {
 
 
 
-      {/* Write Code Here */}
-      <h1>Check Membership</h1>
+        <div className="row1 flex flex-col flex-row items-center justify-center min-h-screen py-2">
+            <MdOutlineChair size={70} onClick={()=>{alert('clicked')}}/>
+            <MdOutlineChair size={70}/>
+            <MdOutlineChair size={70}/>
+        </div>
+        {/* <div className="row2 flex flex-col flex-row items-center justify-center min-h-screen py-2">
+            <MdOutlineChair size={70}/>
+            <MdOutlineChair size={70}/>
+            <MdOutlineChair size={70}/>
+        </div> */}
+
 
     </div>
   )
 }
 
-export default Membership
+export default Seat
