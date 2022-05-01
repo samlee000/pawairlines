@@ -30,6 +30,7 @@ export const Book = () => {
               <Nav.Link href="membership">Membership</Nav.Link>
               <Nav.Link href="flight">Flight Status</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
+              <Nav.Link href="baggage">Baggage</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
                 <NavDropdown.Item href="login">Login</NavDropdown.Item>

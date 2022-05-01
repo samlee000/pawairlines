@@ -15,3 +15,9 @@ CREATE TABLE tickets(
     pet_carry_on VARCHAR(255),
     price VARCHAR(255)
 );
+
+CREATE TABLE baggage(
+    baggage_id SERIAL PRIMARY KEY, 
+    ticket_id VARCHAR(255),
+    baggage_type VARCHAR(255)
+);

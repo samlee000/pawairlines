@@ -91,21 +91,6 @@ app.get("/seat", async (req, res) => {
 });
 
 
-// //Get a flight
-app.get("/seat/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const ticket = await pool.query("SELECT * FROM tickets WHERE ticket_id = $1", 
-            [id]
-        );
-
-        res.json(ticket.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-})
-
-
 // //Get a ticket
 app.get("/seat/:id", async (req, res) => {
     try {
@@ -120,6 +105,7 @@ app.get("/seat/:id", async (req, res) => {
     }
 })
 
+
 // //Update seat number of ticket
 app.put("/seat/:id", async (req, res) => {
     try {
@@ -130,6 +116,78 @@ app.put("/seat/:id", async (req, res) => {
         );
 
         res.json("Seat number was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// //Create a baggage
+app.post("/baggage", async (req, res) => {
+    try {
+        const { ticket_id } = req.body;
+        const newBaggage = await pool.query(
+            "INSERT INTO baggage (ticket_id) VALUES($1) RETURNING *",
+            [ticket_id]
+        );
+
+        res.json(newBaggage.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get all baggage
+app.get("/baggage", async (req, res) => {
+    try {
+        const allBaggage = await pool.query("SELECT * FROM baggage");
+        res.json(allBaggage.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// //Get a baggage
+app.get("/baggage/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const baggage = await pool.query("SELECT * FROM baggage WHERE baggage_id = $1", 
+            [id]
+        );
+
+        res.json(baggage.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+// //Update baggage type
+app.put("/baggage/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { baggage_type } = req.body;
+        const updateBaggage = await pool.query("UPDATE baggage SET baggage_type = $1 WHERE baggage_id = $2",
+            [baggage_type, id]
+        );
+
+        res.json("Baggage was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Delete baggage option
+app.delete("/baggage/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { baggage_type } = req.body;
+        const deleteBaggage = await pool.query("DELETE FROM baggage WHERE baggage_id = $1",
+            [id]
+        );
+
+        res.json("Baggage was deleted.");
     } catch (err) {
         console.error(err.message);
     }

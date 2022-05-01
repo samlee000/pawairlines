@@ -79,14 +79,14 @@ const Seat = ( ticket ) => {
 
   console.log(tickets);
 
-  const [ ticketID, setTicketID ] = useState(null);
+  const [ ticket_id, setticket_id ] = useState(null);
 
     const updateSeat = async e => {
         e.preventDefault();
         try {
-          console.log({ticketID})
+          console.log({ticket_id})
             const body = { seat_number };
-            const response = await fetch(`http://localhost:4000/seat/${ticketID}`, {
+            const response = await fetch(`http://localhost:4000/seat/${ticket_id}`, {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
@@ -103,6 +103,23 @@ const Seat = ( ticket ) => {
       <option key={ticket.ticket_id} value={ticket.ticket_id}>{ticket.ticket_id}</option>
     ));
 
+    const createBaggage = async e => {
+        e.preventDefault();
+        try {
+            // console.log(ticket_id);
+            const body = { ticket_id };
+            const response = await fetch("http://localhost:4000/baggage", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(body)
+            });
+            
+            window.location = "/baggage";
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
   return (
     <div>
       <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
@@ -115,6 +132,7 @@ const Seat = ( ticket ) => {
               <Nav.Link href="membership">Membership</Nav.Link>
               <Nav.Link href="flight">Flight Status</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
+              <Nav.Link href="baggage">Baggage</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
@@ -132,7 +150,7 @@ const Seat = ( ticket ) => {
           <Card.Body>
             <Form>
               <h2>Select Flight: 
-                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" onChange={e => { const ticketID = e.target.value; setTicketID(ticketID);}}>
+                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}}>
                   <option value="null"></option>
                   {optionTickets}
                 </select>
@@ -169,6 +187,10 @@ const Seat = ( ticket ) => {
             <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
               <Button className="seatButton mt-3 btn-block  w-90" variant="primary" onClick={e => updateSeat(e)}> Select this seat </Button>
             </div>
+            <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
+              <Button className="seatButton mt-3 btn-block  w-90" variant="success" onClick={e => createBaggage(e)}> Add Baggage </Button>
+            </div>
+
             </Form>
           </Card.Body>  
         </Card>
