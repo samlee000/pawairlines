@@ -80,6 +80,62 @@ app.delete("/flight/:id", async (req, res) => {
 });
 
 
+// //Get all tickets
+app.get("/seat", async (req, res) => {
+    try {
+        const allTickets = await pool.query("SELECT * FROM tickets");
+        res.json(allTickets.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// //Get a flight
+app.get("/seat/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ticket = await pool.query("SELECT * FROM tickets WHERE ticket_id = $1", 
+            [id]
+        );
+
+        res.json(ticket.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+// //Get a ticket
+app.get("/seat/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ticket = await pool.query("SELECT * FROM tickets WHERE ticket_id = $1", 
+            [id]
+        );
+
+        res.json(ticket.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+// //Update seat number of ticket
+app.put("/seat/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { seat_number } = req.body;
+        const updateSeat = await pool.query("UPDATE tickets SET seat_number = $1 WHERE ticket_id = $2",
+            [seat_number, id]
+        );
+
+        res.json("Seat number was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
 
 
 app.listen(4000, () => {
