@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
-export const Book = () => {
+import AdminInputFlight from "./sqlComponents/AdminInputFlight";
+import AdminListFlights from "./sqlComponents/AdminListFlights";
+import AdminEditFlight from "./sqlComponents/AdminEditFlight";
+
+const Brandon = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -29,7 +33,6 @@ export const Book = () => {
               <Nav.Link href="book">Book A Flight</Nav.Link>
               <Nav.Link href="membership">Membership</Nav.Link>
               <Nav.Link href="flight">Flight Status</Nav.Link>
-              <Nav.Link href="brandon">Brandon Page</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
                 <NavDropdown.Item href="login">Login</NavDropdown.Item>
@@ -43,10 +46,17 @@ export const Book = () => {
 
 
       {/* Write Code Here */}
-      <h1>Book Something</h1>
+      <h1>Brandon</h1>
+      <Fragment> 
+        <div className="container">
+          <AdminInputFlight/>
+          <AdminListFlights/>
+        </div>
+      </Fragment>
+
     </div>
   )
 }
 
 
-export default Book
+export default Brandon
