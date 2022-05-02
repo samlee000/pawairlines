@@ -3,22 +3,21 @@ import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { Navbar, Container, Nav, NavDropdown, Button, Form, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './LogIn.css';
+// import './LogIn.css';
 
-const LogIn = () => {
-
-  const [email, setEmail] = useState('');
+const Admin = () => {
+    const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const navigate = useNavigate();
-  const { signIn } = UserAuth();
+  const { signInAdmin } = UserAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('')
     try {
-      await signIn(email, password)
-      navigate('/book')
+      await signInAdmin(email, password)
+      navigate('/admin_account')
     } catch (e) {
       setError(e.message)
       console.log(e.message)
@@ -30,7 +29,7 @@ const LogIn = () => {
 
   return (
     <div>
-      <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
+        <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
         <Container >
           <Navbar.Brand href="/"> Paw Airlines </Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -56,7 +55,7 @@ const LogIn = () => {
 
       <header className="App-header">
 
-        <h1 className="mb-4">Log In</h1>
+        <h1 className="mb-4">Admin Log In</h1>
 
         <Card style={{ color: "#000" }}>
           {/* <Card.Imgs src= {logo} /> */}
@@ -81,8 +80,7 @@ const LogIn = () => {
         </Card>
       </header>
     </div>
-
   )
 }
 
-export default LogIn
+export default Admin
