@@ -5,6 +5,8 @@ const AdminInputFlight = () => {
     const [origin, setOrigin] = useState("");
     const [destination, setDestination] = useState("");
     const [airline, setAirline] = useState("");
+    const [departure, setDeparture] = useState("");
+    const [plane, setPlane] = useState("");
 
     const onSubmitForm = async e => {
         try {
@@ -12,7 +14,7 @@ const AdminInputFlight = () => {
             const response = await fetch("http://localhost:4000/brandon", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({origin, destination, airline})
+                body: JSON.stringify({origin, destination, airline, departure, plane})
             });
             
             window.location = "/brandon";
@@ -37,6 +39,14 @@ const AdminInputFlight = () => {
                 <div class="form-group">
                     <label>Airline</label>
                     <input type="text" class="form-control" placeholder="Airline" value={airline} onChange={e => setAirline(e.target.value)} />
+                </div>
+                <div class="form-group">
+                    <label>Departure</label>
+                    <input type="text" class="form-control" placeholder="Departure" value={departure} onChange={e => setDeparture(e.target.value)} />
+                </div>
+                <div class="form-group">
+                    <label>Plane ID</label>
+                    <input type="text" class="form-control" placeholder="Plane ID" value={plane} onChange={e => setPlane(e.target.value)} />
                 </div>
                 <button className="btn btn-success">Add</button>
             </form>

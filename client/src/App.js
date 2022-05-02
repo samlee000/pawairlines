@@ -1,6 +1,7 @@
 import LogIn from './components/LogIn';
 import Register from './components/Register';
 import Brandon from './components/Brandon';
+import Pet from './components/Pet';
 import Book from './components/Book';
 import Membership from './components/Membership';
 import Flight from './components/Flight';
@@ -22,6 +23,7 @@ function App() {
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<Register />} />
           <Route path='/brandon' element={<ProtectedRoute><Brandon /></ProtectedRoute>} />
+          <Route path='/pet' element={<ProtectedRoute><Pet /></ProtectedRoute>} />
           <Route path='/book' element={<ProtectedRoute><Book /></ProtectedRoute>} />
           <Route path='/membership' element={<ProtectedRoute><Membership /></ProtectedRoute>} />
           <Route path='/flight' element={<ProtectedRoute><Flight /></ProtectedRoute>} />

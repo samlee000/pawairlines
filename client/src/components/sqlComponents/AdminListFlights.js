@@ -41,6 +41,8 @@ const AdminListFlights = () => {
                 <th>Origin</th>
                 <th>Destination</th>
                 <th>Airline</th>
+                <th>Departure</th>
+                <th>Plane ID</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -51,6 +53,8 @@ const AdminListFlights = () => {
                         <td>{flights.origin}</td>
                         <td>{flights.destination}</td>
                         <td>{flights.airline}</td>
+                        <td>{flights.departure}</td>
+                        <td>{flights.plane_id}</td>
                         <td>
                             <AdminEditFlight flights={flights} />
                         </td>
