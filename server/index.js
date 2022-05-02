@@ -79,121 +79,74 @@ app.delete("/flight/:id", async (req, res) => {
     }
 });
 
-
-// //Get all tickets
-app.get("/seat", async (req, res) => {
+// //Create flight
+app.post("/brandon", async (req, res) => {
     try {
-        const allTickets = await pool.query("SELECT * FROM tickets");
-        res.json(allTickets.rows);
+        const { origin, destination, airline } = req.body;
+        const newFlight = await pool.query(
+            "INSERT INTO flights (origin, destination, airline) VALUES ($1, $2, $3) RETURNING *",
+            [origin, destination, airline]
+        );
+
+        res.json(newFlight.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
 });
 
+// //Get all flight
+app.get("/brandon", async (req, res) => {
+    try {
+        const allFlights = await pool.query("SELECT * FROM flights");
+        res.json(allFlights.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 
-// //Get a ticket
-app.get("/seat/:id", async (req, res) => {
+// //Get a flight
+app.get("/brandon/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const ticket = await pool.query("SELECT * FROM tickets WHERE ticket_id = $1", 
+        const flight = await pool.query("SELECT * FROM flights WHERE flight_id = $1", 
             [id]
         );
 
-        res.json(ticket.rows[0]);
+        res.json(flight.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
 })
 
-
-// //Update seat number of ticket
-app.put("/seat/:id", async (req, res) => {
+// //Update a flight
+app.put("/brandon/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { seat_number } = req.body;
-        const updateSeat = await pool.query("UPDATE tickets SET seat_number = $1 WHERE ticket_id = $2",
-            [seat_number, id]
+        const { origin, destination, airline } = req.body;
+        const updateFlight = await pool.query("UPDATE flights SET origin = $1, destination = $2, airline = $3 WHERE flight_id = $4",
+            [origin, destination, airline, id]
         );
 
-        res.json("Seat number was updated!");
+        res.json("Flight was updated!");
     } catch (err) {
         console.error(err.message);
     }
 });
 
-
-// //Create a baggage
-app.post("/baggage", async (req, res) => {
-    try {
-        const { ticket_id } = req.body;
-        const newBaggage = await pool.query(
-            "INSERT INTO baggage (ticket_id) VALUES($1) RETURNING *",
-            [ticket_id]
-        );
-
-        res.json(newBaggage.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Get all baggage
-app.get("/baggage", async (req, res) => {
-    try {
-        const allBaggage = await pool.query("SELECT * FROM baggage");
-        res.json(allBaggage.rows);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-
-// //Get a baggage
-app.get("/baggage/:id", async (req, res) => {
+// //Delete a flight
+app.delete("/brandon/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const baggage = await pool.query("SELECT * FROM baggage WHERE baggage_id = $1", 
+        const { description } = req.body;
+        const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
             [id]
         );
 
-        res.json(baggage.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-})
-
-
-// //Update baggage type
-app.put("/baggage/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { baggage_type } = req.body;
-        const updateBaggage = await pool.query("UPDATE baggage SET baggage_type = $1 WHERE baggage_id = $2",
-            [baggage_type, id]
-        );
-
-        res.json("Baggage was updated!");
+        res.json("Flight was deleted.");
     } catch (err) {
         console.error(err.message);
     }
 });
-
-// //Delete baggage option
-app.delete("/baggage/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { baggage_type } = req.body;
-        const deleteBaggage = await pool.query("DELETE FROM baggage WHERE baggage_id = $1",
-            [id]
-        );
-
-        res.json("Baggage was deleted.");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-
 
 
 app.listen(4000, () => {
