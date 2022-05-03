@@ -9,6 +9,8 @@ import Flight from './components/Flight';
 import Seat from './components/Seat';
 import Baggage from './components/Baggage';
 import AdminBilling from './components/AdminBilling';
+import UserBilling from './components/UserBilling';
+
 import { Route, Routes } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -35,6 +37,7 @@ function App() {
           <Route path='/seat' element={<ProtectedRoute><Seat /></ProtectedRoute>} />
           <Route path='/baggage' element={<ProtectedRoute><Baggage /></ProtectedRoute>} />
           <Route path='/adminbilling' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
+          <Route path='/userbilling' element={<ProtectedRoute><UserBilling /></ProtectedRoute>} />
         </Routes>
       </AuthContextProvider>
 
