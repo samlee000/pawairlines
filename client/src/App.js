@@ -3,6 +3,7 @@ import Register from './components/Register';
 import Book from './components/Book';
 import Membership from './components/Membership';
 import Flight from './components/Flight';
+import AdminBilling from './components/AdminBilling';
 import { Route, Routes } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -23,6 +24,7 @@ function App() {
           <Route path='/book' element={<ProtectedRoute><Book /></ProtectedRoute>} />
           <Route path='/membership' element={<ProtectedRoute><Membership /></ProtectedRoute>} />
           <Route path='/flight' element={<ProtectedRoute><Flight /></ProtectedRoute>} />
+          <Route path='/adminbilling' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
         </Routes>
       </AuthContextProvider>
 
