@@ -7,13 +7,13 @@ const InputFlight = () => {
     const onSubmitForm = async e => {
         try {
             const body = { description };
-            const response = await fetch("http://localhost:5000/flight", {
+            const response = await fetch("http://localhost:4000/flight", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(body)
             });
             
-            window.location = "/";
+            window.location = "/flight";
         } catch (err) {
             console.error(err.message);
         }

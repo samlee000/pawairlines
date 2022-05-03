@@ -3,87 +3,14 @@ const app = express();
 const cors = require("cors");
 const pool = require("./db");
 
-const { initializeApp, applicationDefault, cert } = require('firebase-admin/app');
-const { getFirestore, Timestamp, FieldValue } = require('firebase-admin/firestore');
-
-const serviceAccount = require('./project_sdk.json');
-
-initializeApp({
-  credential: cert(serviceAccount)
-});
-
-const db = getFirestore();
-// --- DB Data Population ----
-async function populate_customer(cusID, memID, admin, fname, lname) {
-    const customer = db.collection('user').doc('test_user1');
-    await customer.set({
-        "customerID": cusID,
-        "membershipID": memID,
-        "isAdmin": admin,
-        "customerFName": fname,
-        "customerLName": lname
-    })
-}
-
-async function populate_membership(memID, cusID, memType, memDuration) {
-    const membership = db.collection('membership').doc('test_membership1')
-    await membership.set({
-        "membershipID": memID,
-        "customerID": cusID,
-        "membershipType": memType,
-        "membershipDuration": memDuration
-    })
-}
-
-async function populate_billing(billID, userID, routingNo, subtotal, total) {
-    const billing = db.collection("billing").doc("test_bill1")
-    await billing.set({
-        "billID": billID,
-        "userID": userID,
-        "routingNo": routingNo,
-        "subtotal": subtotal,
-        "total": total
-    })
-}
-
-async function populate_tickets() {
-    
-}
-
-async function populate_pet() {
-    
-}
-
-async function populate_baggage() {
-    
-}
-
-async function populate_flight() {
-    
-}
-
-async function populate_plane() {
-    
-}
-
-async function populate_pilot() {
-    
-}
-// const customer2 = db.collection('user').doc('test_user1');
-// await customer2.set({
-//     customerID: 2,
-//     membershipID: 2,
-//     isAdmin: false,
-//     customerFName: "Sullivan",
-//     customerLName: "Ross"
-// })
-//middleware
+// middleware
 app.use(cors());
 app.use(express.json());
 
+
 //Routes
 
-//Create flight
+// //Create flight
 app.post("/flight", async (req, res) => {
     try {
         const { description } = req.body;
@@ -98,7 +25,7 @@ app.post("/flight", async (req, res) => {
     }
 });
 
-//Get all flight
+// //Get all flight
 app.get("/flight", async (req, res) => {
     try {
         const allFlights = await pool.query("SELECT * FROM flights");
@@ -108,7 +35,7 @@ app.get("/flight", async (req, res) => {
     }
 });
 
-//Get a flight
+// //Get a flight
 app.get("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -122,7 +49,7 @@ app.get("/flight/:id", async (req, res) => {
     }
 })
 
-//Update a flight
+// //Update a flight
 app.put("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -137,7 +64,7 @@ app.put("/flight/:id", async (req, res) => {
     }
 });
 
-//Delete a flight
+// //Delete a flight
 app.delete("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -152,10 +79,193 @@ app.delete("/flight/:id", async (req, res) => {
     }
 });
 
-app.listen(5000, () => {
-    console.log("server has started on port 5000");
+
+// //Get all tickets
+app.get("/seat", async (req, res) => {
+    try {
+        const allTickets = await pool.query("SELECT * FROM tickets");
+        res.json(allTickets.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
-populate_customer(1, 1, false, "John", "Doe")
-populate_customer(2, 2, false, "Sullivan", "Ross")
 
+// //Get a ticket
+app.get("/seat/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const ticket = await pool.query("SELECT * FROM tickets WHERE ticket_id = $1", 
+            [id]
+        );
+
+        res.json(ticket.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+// //Update seat number of ticket
+app.put("/seat/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { seat_number } = req.body;
+        const updateSeat = await pool.query("UPDATE tickets SET seat_number = $1 WHERE ticket_id = $2",
+            [seat_number, id]
+        );
+
+        res.json("Seat number was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// //Create a baggage
+app.post("/baggage", async (req, res) => {
+    try {
+        const { ticket_id } = req.body;
+        const newBaggage = await pool.query(
+            "INSERT INTO baggage (ticket_id) VALUES($1) RETURNING *",
+            [ticket_id]
+        );
+
+        res.json(newBaggage.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get all baggage
+app.get("/baggage", async (req, res) => {
+    try {
+        const allBaggage = await pool.query("SELECT * FROM baggage");
+        res.json(allBaggage.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// //Get a baggage
+app.get("/baggage/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const baggage = await pool.query("SELECT * FROM baggage WHERE baggage_id = $1", 
+            [id]
+        );
+
+        res.json(baggage.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+
+// //Update baggage type
+app.put("/baggage/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { baggage_type } = req.body;
+        const updateBaggage = await pool.query("UPDATE baggage SET baggage_type = $1 WHERE baggage_id = $2",
+            [baggage_type, id]
+        );
+
+        res.json("Baggage was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Delete baggage option
+app.delete("/baggage/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { baggage_type } = req.body;
+        const deleteBaggage = await pool.query("DELETE FROM baggage WHERE baggage_id = $1",
+            [id]
+        );
+
+        res.json("Baggage was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// //Create user
+app.post("/user", async (req, res) => {
+    try {
+        var data = req.body;
+        const newUser = await pool.query(
+            "INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+            [data.first_name, data.last_name, data.age, data.gender, data.user_address, data.user_email, data.phone_number]
+        );
+
+        res.json(newUser.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get all users
+app.get("/user", async (req, res) => {
+    try {
+        const allUsers = await pool.query("SELECT * FROM users");
+        res.json(allUsers.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get a user
+app.get("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await pool.query("SELECT * FROM users WHERE user_id = $1", 
+            [id]
+        );
+
+        res.json(user.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+// //Update a user
+app.put("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        var data = req.body;
+        const updateUser = await pool.query("UPDATE users SET first_name = $1, last_name = $2, age = $3, gender = $4, user_address = $5, user_email = $6, phone_number =$7 WHERE user_id = $8",
+            [data.first_name, data.last_name, data.age, data.gender, data.user_address, data.user_email, data.phone_number, id]
+        );
+
+        res.json("Flight was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Delete a user
+app.delete("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { first_name } = req.body;
+        const deleteUser = await pool.query("DELETE FROM users WHERE user_id = $1",
+            [id]
+        );
+
+        res.json("User was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+
+
+app.listen(4000, () => {
+    console.log("server has started on port 4000");
+});
