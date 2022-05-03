@@ -18,6 +18,17 @@ const UserListPets = () => {
         }
     };
 
+    const updateTicketFalse = async (id) => {
+        try {
+            const updateTicketFalse = await fetch(`http://localhost:4000/ticket/${id}`, {
+                method: "PUT"
+            });
+
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
+
     const getPet = async () => {
         try {
             const response = await fetch("http://localhost:4000/pet");
@@ -55,7 +66,7 @@ const UserListPets = () => {
                             <UserEditPet pets={pets} />
                         </td>
                         <td>
-                            <button className="btn btn-danger" onClick={() => deletePet(pets.pet_id)}>Delete</button>
+                            <button className="btn btn-danger" onClick={() => {deletePet(pets.pet_id); updateTicketFalse(pets.ticket_id);}}>Delete</button>
                         </td>
                     </tr>
                 ))}

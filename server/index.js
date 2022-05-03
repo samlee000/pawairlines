@@ -157,14 +157,11 @@ app.post("/pet", async (req, res) => {
             "SELECT pet_co FROM ticket WHERE ticket_id = $1",
             [ticket]
         );
-        console.log(petCO.rows[0].pet_co);
 
         if (petCO.rows[0].pet_co) {
             console.log("already has pet carry on");
         }
         else {
-            console.log("does not have pet carry on")
-
             const newPet = await pool.query(
                 "INSERT INTO pet (ticket_id, species, breed) VALUES ($1, $2, $3) RETURNING *",
                 [ticket, species, breed]
@@ -249,12 +246,27 @@ app.delete("/pet/:id", async (req, res) => {
     }
 });
 
+// //Update a ticket
+app.put("/ticket/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const updateTicketFalse = await pool.query(
+            "UPDATE ticket SET pet_co = false WHERE ticket_id = $1",
+            [id]
+        );
+
+        res.json("Ticket pet_co updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 
 // //Get all tickets
 app.get("/seat", async (req, res) => {
     try {
         const allTickets = await pool.query("SELECT * FROM tickets");
         res.json(allTickets.rows);
+        res.json("Ticket pet_co updated!");
     } catch (err) {
         console.error(err.message);
     }
