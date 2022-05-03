@@ -1,10 +1,13 @@
-import React, { useState, useEffect, Link } from 'react'
+import React, { useState } from 'react'
 import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import economy_img from "./images/econ_seat.jpg";
+import business_img from "./images/bzn_seat.jpg";
+import first_image from "./images/first_seat.png";
 
-export const Book = (bookFlight) => {
+export const Book = (ticket) => {
   const { logout } = UserAuth();
   const navigate = useNavigate();
 
@@ -17,7 +20,7 @@ export const Book = (bookFlight) => {
       console.log(e.message);
     }
   };
-  const [booking_request, setBooking] = useState([]);
+  /*const [booking_request, setBooking] = useState([]);*/
   const [ticket_id, setticket_id] = useState(null);
   const [tickets, setTickets] = useState([]);
   const [error, setError] = useState('');
@@ -26,19 +29,22 @@ export const Book = (bookFlight) => {
   ));
 
   const [name_response, setName] = useState("");
-  const [classType, setClassType] = useState(bookFlight.classType)
-  const handleSubmit = async (e) => {
+  const [classtype, setClassType] = useState("");
+  const updateClassType = async e => {
     e.preventDefault();
-    setError('')
     try {
-      navigate('/seat')
-    } catch (e) {
-      setError(e.message)
-      console.log(e.message)
-      alert('Incorrect username or password.')
-
+      const body = { classtype };
+      const response = await fetch(`http://localhost:4000/book}`, {
+        method: "POST",
+        headers: { "Content-Type": "applications/json" },
+        body: JSON.stringify(body)
+      });
+      window.location = "/book";
+    } catch (err) {
+      console.error(err.message);
     }
-  };
+  }
+  
 
   return (
     <div>
@@ -94,6 +100,7 @@ export const Book = (bookFlight) => {
                       <div className='numone col-4'>
                         <Card className='card1 h-100' onClick={() => setClassType("Economy")}>
                           <Card.Body>
+                            <Card.Img src = {economy_img} />
                             <h5 className='cart-title'>Economy</h5>
                             <p className='card-text'>You will find the most problematic people here</p>
                           </Card.Body>
@@ -101,8 +108,9 @@ export const Book = (bookFlight) => {
                       </div>
 
                       <div className='numone col-4' >
-                        <Card className='card2 h-100' onClick={() => setClassType("BusinessClass")}>
+                        <Card className='card2 h-100' onClick={() => setClassType("Business Class")}>
                           <Card.Body>
+                            <Card.Img src = {business_img} />
                             <h5 className='cart-title'>Business Class </h5>
                             <p className='card-text'>This will make you feel very cash money</p>
                           </Card.Body>
@@ -110,8 +118,9 @@ export const Book = (bookFlight) => {
                       </div>
 
                       <div className='numone col-4'>
-                        <Card className='card3 h-100' onClick={() => setClassType("FirstClass")}>
+                        <Card className='card3 h-100' onClick={() => setClassType("First Class")}>
                           <Card.Body>
+                            <Card.Img src = {first_image} />
                             <h5 className='cart-title'>First Class </h5>
                             <p className='card-text'>Reveille takes this</p>
                           </Card.Body>
@@ -121,6 +130,9 @@ export const Book = (bookFlight) => {
                   </div>
                 </Card.Body>
               </Card>
+              <Card>
+                <h3 className='mt-3'>Selected Class Type: {classtype}</h3>
+              </Card>
               <div className="row1 mt-3 ">
                 <Form.Group controlId="dob">
                   <Form.Label>Select Departure Date</Form.Label>
@@ -128,6 +140,9 @@ export const Book = (bookFlight) => {
                 </Form.Group>
               </div>
             </Form>
+            <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
+              <Button className="baggageButton mt-3 btn-block  w-90" variant="primary" onClick={e => updateClassType(e)}> Select this Seat Type </Button>
+            </div>
             <div className="row1 mt-3 center ">
               <Button className="seatButton mt-3 btn-block  w-90" variant="primary" onClick={event => window.location.href = '/seat'}> Go to Seat Selection </Button>
             </div>
