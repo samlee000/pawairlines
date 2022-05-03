@@ -164,21 +164,21 @@ app.post("/pet", async (req, res) => {
         }
         else {
             console.log("does not have pet carry on")
+
+            const newPet = await pool.query(
+                "INSERT INTO pet (ticket_id, species, breed) VALUES ($1, $2, $3) RETURNING *",
+                [ticket, species, breed]
+            );
+    
+            res.json(newPet.rows[0]);
+    
+            const updateTicket = await pool.query(
+                "UPDATE ticket SET pet_co = true WHERE ticket_id = $1",
+                [ticket]
+            );
+    
+            res.json(updateTicket.rows[0]);
         }
-
-        const newPet = await pool.query(
-            "INSERT INTO pet (ticket_id, species, breed) VALUES ($1, $2, $3) RETURNING *",
-            [ticket, species, breed]
-        );
-
-        res.json(newPet.rows[0]);
-
-        const updateTicket = await pool.query(
-            "UPDATE ticket SET pet_co = true WHERE ticket_id = $1",
-            [ticket]
-        );
-
-        res.json(updateTicket.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
@@ -233,10 +233,23 @@ app.delete("/pet/:id", async (req, res) => {
         );
 
         res.json("Pet was deleted.");
+
+        /*
+        TODO: update ticket pet_co attribute to false
+        
+        const updateTicket = await pool.query(
+                "UPDATE ticket SET pet_co = false WHERE ticket_id = $1",
+                [ticket]
+            );
+    
+            res.json(updateTicket.rows[0]);
+        */
     } catch (err) {
         console.error(err.message);
     }
 });
+
+
 
 
 app.listen(4000, () => {
