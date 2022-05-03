@@ -2,6 +2,7 @@ import LogIn from './components/LogIn';
 import Register from './components/Register';
 import Admin from './components/Admin';
 import AdminAccount from './components/AdminAccount';
+import AdminUsers from './components/AdminUsers';
 import Book from './components/Book';
 import Membership from './components/Membership';
 import Flight from './components/Flight';
@@ -26,6 +27,7 @@ function App() {
           <Route path='/register' element={<Register />} />
           <Route path='/admin' element={<Admin />} />
           <Route path='/admin_account' element={<ProtectedRoute><AdminAccount /></ProtectedRoute>} />
+          <Route path='/admin_users' element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
           <Route path='/book' element={<ProtectedRoute><Book /></ProtectedRoute>} />
           <Route path='/membership' element={<ProtectedRoute><Membership /></ProtectedRoute>} />
           <Route path='/flight' element={<ProtectedRoute><Flight /></ProtectedRoute>} />

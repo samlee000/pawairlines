@@ -35,9 +35,6 @@ const Flight = () => {
               <Nav.Link href="flight">Flight Status</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
-                {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
-                <NavDropdown.Item href="login">Login</NavDropdown.Item>
-                <NavDropdown.Divider /> */}
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -46,8 +43,6 @@ const Flight = () => {
       </Navbar>
 
 
-
-      {/* Write Code Here */}
       <h1>Look at Flights</h1>
       <Fragment> 
         <div className="container">
