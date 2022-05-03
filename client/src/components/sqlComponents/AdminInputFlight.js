@@ -26,7 +26,7 @@ const AdminInputFlight = () => {
 
     return (
         <Fragment>
-            <h1 className="mt-3">Flight List</h1>
+            <h1 className="mt-3">Create a Flight</h1>
             <form className="mt-2 mb-5" onSubmit={onSubmitForm}>
                 <div class="form-group">
                     <label>Origin</label>

@@ -27,14 +27,10 @@ export const Book = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="membership">Membership</Nav.Link>
-              <Nav.Link href="flight">Flight Status</Nav.Link>
-              <Nav.Link href="brandon">Admin Flight Page</Nav.Link>
-              <Nav.Link href="pet">User Pet Page</Nav.Link>
+              <Nav.Link href="pet">Pet Selection</Nav.Link>
+              <Nav.Link href="seat">Seat Selection</Nav.Link>
+              <Nav.Link href="baggage">Baggage</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
-                {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
-                <NavDropdown.Item href="login">Login</NavDropdown.Item>
-                <NavDropdown.Divider /> */}
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
             </Nav>

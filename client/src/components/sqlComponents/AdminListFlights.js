@@ -35,7 +35,8 @@ const AdminListFlights = () => {
 
     console.log(flight);
     return <Fragment>
-        <table class="table">
+        <h1 className="mt-3">Manage All Flights</h1>
+        <table class="table mt-4">
             <thead>
             <tr>
                 <th>Origin</th>

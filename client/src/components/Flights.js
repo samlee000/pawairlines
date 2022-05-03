@@ -8,7 +8,7 @@ import AdminInputFlight from "./sqlComponents/AdminInputFlight";
 import AdminListFlights from "./sqlComponents/AdminListFlights";
 import AdminEditFlight from "./sqlComponents/AdminEditFlight";
 
-const Brandon = () => {
+const Flights = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -30,9 +30,11 @@ const Brandon = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="membership">Membership</Nav.Link>
-              <Nav.Link href="flight">Flight Status</Nav.Link>
+              <Nav.Link href="admin_account">Account</Nav.Link>
+              <Nav.Link href="admin_flights">All Flights</Nav.Link>
+              <Nav.Link href="admin_users">All Users</Nav.Link>
+              <Nav.Link href="admin_planes">All Planes</Nav.Link>
+              <Nav.Link href="admin_bills">All Bills</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
                 <NavDropdown.Item href="login">Login</NavDropdown.Item>
@@ -44,9 +46,6 @@ const Brandon = () => {
         </Container>
       </Navbar>
 
-
-      {/* Write Code Here */}
-      <h1>Brandon</h1>
       <Fragment> 
         <div className="container">
           <AdminInputFlight/>
@@ -59,4 +58,4 @@ const Brandon = () => {
 }
 
 
-export default Brandon
+export default Flights
