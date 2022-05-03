@@ -13,18 +13,33 @@ export const Register = () => {
   const { createUser } = UserAuth();
   const navigate = useNavigate()
 
+  const [first_name, setFirst_name] = useState("");
+  const [last_name, setLast_name] = useState("");
+  const [age, setAge] = useState("");
+  const [gender, setGender] = useState("");
+  const [user_address, setUser_address] = useState("");
+  const [user_email, setUser_email] = useState("");
+  const [phone_number, setPhone_number] = useState("");
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     try {
+      const body = { first_name, last_name, age, gender, user_address, user_email, phone_number };
+      const response = await fetch("http://localhost:4000/user", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(body)
+      });
+
       await createUser(email, password);
-      navigate('/book')
+      // navigate('/book')
+      window.location = "/book";
     } catch (e) {
       setError(e.message);
       console.log(e.message);
     }
   };
-
 
   return (
     <div>
@@ -35,11 +50,12 @@ export const Register = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="book">Book A Flight</Nav.Link>
+              {/* <Nav.Link href="book">Book A Flight</Nav.Link>
               <Nav.Link href="membership">Membership</Nav.Link>
               <Nav.Link href="flight">Flight Status</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
-              <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="baggage">Baggage</Nav.Link> */}
+              <Nav.Link href="admin">Admin</Nav.Link>
               <NavDropdown title="Register/Login" id="basic-nav-dropdown">
                 <NavDropdown.Item href="register">Register</NavDropdown.Item>
                 <NavDropdown.Item href="login">Login</NavDropdown.Item>
@@ -63,37 +79,37 @@ export const Register = () => {
             <div className="row">
               <div className="form-group col-md-6">
                 <label for="inputFName" className="h5">First Name</label>
-                <input type="text" className="form-control" id="inputFName" placeholder="First Name"/>
+                <input onChange={(e) => setFirst_name(e.target.value)} type="text" className="form-control" id="inputFName" placeholder="First Name" required="true"/>
               </div>
               <div className="form-group col-md-6">
                 <label for="inputLName" className="h5">Last Name</label>
-                <input type="text" className="form-control" id="inputLName" placeholder="Last Name"/>
+                <input onChange={(e) => setLast_name(e.target.value)} type="text" className="form-control" id="inputLName" placeholder="Last Name" required="true"/>
               </div>
             </div>
             <div className="form-group">
               <label for="inputAddress" className="h5">Address</label>
-              <input type="text" className="form-control" id="inputAddress" placeholder="1234 Main St"/>
+              <input onChange={(e) => setUser_address(e.target.value)} type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" required="true"/>
             </div>
             <div className="form-group">
               <label for="phonenumber" className="h5">Phone Number</label>
-              <input type="text" className="form-control" id="phonenumber" placeholder="000-000-0000"/>
+              <input onChange={(e) => setPhone_number(e.target.value)} type="text" className="form-control" id="phonenumber" placeholder="000-000-0000" required="true"/>
             </div>
 
             <div className="row">
               <div className="form-group col-md-6">
                 <label for="inputEmail4" className="h5">Email</label>
-                <input onChange={(e) => setEmail(e.target.value)} type="email" className="form-control" id="inputEmail4" placeholder="Email"/>
+                <input onChange={(e) => setEmail(e.target.value) & setUser_email(e.target.value)} type="email" className="form-control" id="inputEmail4" placeholder="Email" required="true"/>
               </div>
               <div className="form-group col-md-6">
                 <label for="inputPassword4" className="h5">Password</label>
-                <input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="inputPassword4" placeholder="Password"/>
+                <input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="inputPassword4" placeholder="Password" required="true"/>
               </div>
             </div>
 
             <div className="form-row">
               <div className="form-group col-md-4">
                 <label for="gender" className="h5">Gender</label>
-                <select id="gender" className="form-control">
+                <select id="gender" className="form-control" onChange={(e) => setGender(e.target.value)} required="true">
                   <option selected className="h5">Choose...</option>
                   <option>Male</option>
                   <option>Female</option>
@@ -101,7 +117,7 @@ export const Register = () => {
               </div>
               <div className="form-group col-md-2">
                 <label for="inputAge" className="h5">Age</label>
-                <input type="text" className="form-control" id="inputAge"/>
+                <input onChange={(e) => setAge(e.target.value)} type="text" className="form-control" id="inputAge" required="true"/>
               </div>
             </div>
             <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">

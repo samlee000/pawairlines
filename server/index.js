@@ -149,6 +149,81 @@ app.delete("/brandon/:id", async (req, res) => {
 });
 
 
+<<<<<<< HEAD
+=======
+// //Create user
+app.post("/user", async (req, res) => {
+    try {
+        var data = req.body;
+        const newUser = await pool.query(
+            "INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+            [data.first_name, data.last_name, data.age, data.gender, data.user_address, data.user_email, data.phone_number]
+        );
+
+        res.json(newUser.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get all users
+app.get("/user", async (req, res) => {
+    try {
+        const allUsers = await pool.query("SELECT * FROM users");
+        res.json(allUsers.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get a user
+app.get("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const user = await pool.query("SELECT * FROM users WHERE user_id = $1", 
+            [id]
+        );
+
+        res.json(user.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+// //Update a user
+app.put("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        var data = req.body;
+        const updateUser = await pool.query("UPDATE users SET first_name = $1, last_name = $2, age = $3, gender = $4, user_address = $5, user_email = $6, phone_number =$7 WHERE user_id = $8",
+            [data.first_name, data.last_name, data.age, data.gender, data.user_address, data.user_email, data.phone_number, id]
+        );
+
+        res.json("Flight was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Delete a user
+app.delete("/user/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { first_name } = req.body;
+        const deleteUser = await pool.query("DELETE FROM users WHERE user_id = $1",
+            [id]
+        );
+
+        res.json("User was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+
+
+>>>>>>> 48aac992a959a49a7ea1442832ab6720d4012a85
 app.listen(4000, () => {
     console.log("server has started on port 4000");
 });
