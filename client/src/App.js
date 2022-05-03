@@ -1,8 +1,13 @@
 import LogIn from './components/LogIn';
 import Register from './components/Register';
+import Admin from './components/Admin';
+import AdminAccount from './components/AdminAccount';
+import AdminUsers from './components/AdminUsers';
 import Book from './components/Book';
 import Membership from './components/Membership';
 import Flight from './components/Flight';
+import Seat from './components/Seat';
+import Baggage from './components/Baggage';
 import AdminBilling from './components/AdminBilling';
 import { Route, Routes } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
@@ -21,9 +26,14 @@ function App() {
           <Route path='/' element={<LogIn />} />
           <Route path='/login' element={<LogIn />} />
           <Route path='/register' element={<Register />} />
+          <Route path='/admin' element={<Admin />} />
+          <Route path='/admin_account' element={<ProtectedRoute><AdminAccount /></ProtectedRoute>} />
+          <Route path='/admin_users' element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
           <Route path='/book' element={<ProtectedRoute><Book /></ProtectedRoute>} />
           <Route path='/membership' element={<ProtectedRoute><Membership /></ProtectedRoute>} />
           <Route path='/flight' element={<ProtectedRoute><Flight /></ProtectedRoute>} />
+          <Route path='/seat' element={<ProtectedRoute><Seat /></ProtectedRoute>} />
+          <Route path='/baggage' element={<ProtectedRoute><Baggage /></ProtectedRoute>} />
           <Route path='/adminbilling' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
         </Routes>
       </AuthContextProvider>
