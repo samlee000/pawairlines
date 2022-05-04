@@ -24,7 +24,7 @@ CREATE TABLE tickets(
     bill_id VARCHAR(255),
     seat_number VARCHAR(255),
     class VARCHAR(255),
-    pet_carry_on VARCHAR(255),
+    pet_co VARCHAR(255),
     economy_price DECIMAL(50, 2),
     business_price DECIMAL(50, 2),
     firstclass_price DECIMAL(50, 2)

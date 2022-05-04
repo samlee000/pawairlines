@@ -11,6 +11,7 @@ import Seat from './components/Seat';
 import Baggage from './components/Baggage';
 import AdminBilling from './components/AdminBilling';
 import UserBilling from './components/UserBilling';
+import Ticket from './components/Ticket';
 
 import { Route, Routes } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
@@ -38,6 +39,7 @@ function App() {
           <Route path='/userflight' element={<ProtectedRoute><UserFlight /></ProtectedRoute>} />
           <Route path='/seat' element={<ProtectedRoute><Seat /></ProtectedRoute>} />
           <Route path='/baggage' element={<ProtectedRoute><Baggage /></ProtectedRoute>} />
+          <Route path='/ticket' element={<ProtectedRoute><Ticket /> </ProtectedRoute>} />
           <Route path='/admin_bill' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
           <Route path='/user_bill' element={<ProtectedRoute><UserBilling /></ProtectedRoute>} />
         </Routes>

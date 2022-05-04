@@ -7,22 +7,6 @@ const InputBill = () => {
     const [user_id, setUserID] = useState("");
     const [flight_id, setFlightID] = useState("");
 
-    // const [flights, setFlights] = useState([]);
-    // const [flight_id,setFlightID] = useState(null);
-    // let optionFlights = flights.map(flight => {
-    //     <option key={flight.flight_id} value={flight.flight_id}>{flight.flight_id}</option>
-    // });
-    // const getFlightList = async () => {
-    //     try {
-    //         const response = await fetch("http://localhost:4000/flight");
-    //         const jsonData = await response.json();
-
-    //         setFlights(jsonData);
-    //     } catch (err) {
-    //         console.error(err.message);
-    //     }
-    // };
-
     const onSubmitForm = async e => {
         try {
             const body = { subtotal, user_id };
@@ -59,16 +43,6 @@ const InputBill = () => {
                 <Button className="loginButton mt-3 btn-block  w-90" variant="primary" type="submit"> Submit </Button>
             </div>
             </Form>
-            
-            {/* <form className="d-flex mt-2 mb-5" onSubmit={onSubmitForm}>
-                <input type="text" className="form-control" 
-                value={subtotal} 
-                onChange={e => setSubtotal(e.target.value)} />
-                <input type="text" className="form-control" 
-                value={user_id} 
-                onChange={e => setSubtotal(e.target.value)} />
-                <button className="btn btn-success">Add</button>
-            </form> */}
         </Fragment>
     )
 }

@@ -31,7 +31,9 @@ const NavBar = () => {
               <Nav.Link href="userflight">Flight Status</Nav.Link>
               <Nav.Link href="flight">Enter Flights</Nav.Link>
               <Nav.Link href="user_bill">User Billing</Nav.Link>
+              <Nav.Link href="admin_bill">All Bills</Nav.Link>
               <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="ticket">Edit Tickets</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
                 <NavDropdown.Item href="login">Login</NavDropdown.Item>

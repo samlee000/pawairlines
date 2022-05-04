@@ -102,6 +102,7 @@ app.delete("/flight/:id", async (req, res) => {
     }
 });
 
+//
 
 // //Get all tickets
 app.get("/seat", async (req, res) => {
@@ -246,10 +247,7 @@ app.get("/user", async (req, res) => {
 // //Get a user
 app.get("/user/:id", async (req, res) => {
     try {
-        console.log("about to get specific user");
         const { id } = req.params;
-        console.log("user_id = ");
-        console.log(id);
         const user = await pool.query("SELECT * FROM users WHERE user_id = $1", 
             [id]
         );
@@ -263,9 +261,7 @@ app.get("/user/:id", async (req, res) => {
 // Get a user's user_id from phone number
 app.get("/useridfromphone/:number", async (req, res) => {
     try {
-        console.log("In useridfromemail");
         const { number } = req.params;
-        console.log(number);
         const user_id = await pool.query("SELECT user_id FROM users WHERE phone_number = $1",
             [number]
         );
@@ -397,33 +393,86 @@ app.delete("/admin_bill/:id", async (req, res) => {
 
 
 
-// Create a new ticket with a new price (admin)
-app.post("/ticketing", async (req, res) => {
+// Create a new ticket (admin)
+app.post("/ticket", async (req, res) => {
+    try {
+        var data = req.body;
+        data.user_id = 2;
+        data.bill_id = 4;
+        data.flight_id = 5;
+        const newBill = await pool.query(
+            "INSERT INTO tickets (flight_id, user_id, bill_id, seat_number, class, pet_co, economy_price, business_price, firstclass_price) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
+            [data.flight_id, data.user_id, 4, data.seat_number, data.user_class, data.pet_co, data.economy_price, data.business_price, data.firstclass_price]
+        );
 
+        res.json(newBill.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
 // Get all current tickets (admin)
-app.post("/ticketing/:id", async (req, res) => {
-
+app.get("/ticket", async (req, res) => {
+    try {
+        const allTickets = await pool.query(
+            "SELECT * FROM tickets"
+        );
+        res.json(allTickets.rows);
+    } catch (err) {
+        console.error(err.message)
+    }
 });
 
-// Get a ticket from any user (admin)
-app.get("/ticketing/:id", async (req, res) => {
-
+// Get all tickets from a user (admin/user)
+app.get("/ticket/:id", async (req, res) => {
+    const { id } = req.params;
+    try {
+        const allTickets = await pool.query(
+            "SELECT * FROM tickets WHERE user_id = $1",
+            [id]
+        );
+        res.json(allTickets.rows);
+    } catch (err) {
+        console.error(err.message)
+    }
 });
-
-// Get all tickets currently owned (user)
 
 // Buy a ticket not currently owned (user)
 
-// Update a ticket price (admin)
-app.put("/ticketing/:id", async (req, res) => {
+// Update a ticket (admin)
+app.put("/ticket/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        console.log("id = ");
+        console.log(id);
+        var data = req.body;
+        console.log(data.ticket_id);
+        data.user_id = 2;
+        data.bill_id = 4;
+        data.flight_id = 5;
+        const newBill = await pool.query(
+            "UPDATE tickets SET flight_id = $1, user_id = $2, bill_id = $3, seat_number = $4, class = $5, pet_co = $6, economy_price = $7, business_price = $8, firstclass_price = $9 WHERE ticket_id = $10",
+            [data.flight_id, data.user_id, 4, data.seat_number, data.user_class, data.pet_co, data.economy_price, data.business_price, data.firstclass_price, id]
+        );
 
+        res.json(newBill.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
 // Delete a ticket (admin)
-app.delete("/ticketing/:id", async (req, res) => {
-
+app.delete("/ticket/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteTicket = await pool.query(
+            "DELETE FROM tickets WHERE ticket_id = $1",
+            [id]
+        );
+        res.json("Ticket was deleted!");
+    } catch (err) {
+        console.error(err.message);
+    }
 });
 
 // Delete a ticket owned (user)
