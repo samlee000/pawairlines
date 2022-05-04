@@ -8,7 +8,7 @@ const ListFlight = () => {
 
     const deleteFlight = async (id) => {
         try {
-            const deleteFLight = await fetch(`http://localhost:4000/flight/${id}`, {
+            const deleteFlight = await fetch(`http://localhost:4000/flight/${id}`, {
                 method: "DELETE"
             });
 

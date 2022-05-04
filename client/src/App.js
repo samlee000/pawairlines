@@ -4,6 +4,7 @@ import Book from './components/Book';
 import Membership from './components/Membership';
 import Flight from './components/Flight';
 import AdminBilling from './components/AdminBilling';
+import Ticketing from './components/Ticketing';
 import { Route, Routes } from 'react-router-dom';
 import { AuthContextProvider } from './context/AuthContext';
 import ProtectedRoute from './components/ProtectedRoute';
@@ -25,6 +26,7 @@ function App() {
           <Route path='/membership' element={<ProtectedRoute><Membership /></ProtectedRoute>} />
           <Route path='/flight' element={<ProtectedRoute><Flight /></ProtectedRoute>} />
           <Route path='/adminbilling' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
+          <Route path='/ticketing' element={<ProtectedRoute><Ticketing /></ProtectedRoute>} />
         </Routes>
       </AuthContextProvider>
 
