@@ -14,10 +14,10 @@ app.use(express.json());
 app.post("/book", async (req, res) => {
     try {
         console.log("Entered post");
-        const {fname, lname, seat_type} = req.body;
+        const {fname, lname, seat_type, flight_id, price} = req.body;
         const newBook = await pool.query(
-            "INSERT INTO book (fname, lname, seat_type) VALUES ($1, $2, $3) RETURNING *",
-            [fname, lname, seat_type]
+            "INSERT INTO book (fname, lname, seat_type, flight_id, price) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [fname, lname, seat_type, flight_id, price]
         );
         res.json(newBook.rows[0]);
         console.log("Post Completed.");
@@ -34,20 +34,20 @@ app.get("/book", async (req, res) => {
         console.error(err.message);
     }
 });
-//delete a booking
-// app.delete("/book/:id", async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//         const { description } = req.body;
-//         const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
-//             [id]
-//         );
+//delete a booking, need help with flight_id and fname
+app.delete("/book/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { description } = req.body;
+        const deleteFlight = await pool.query("DELETE FROM book WHERE flight_id = $1",
+            [id]
+        );
 
-//         res.json("Flight was deleted.");
-//     } catch (err) {
-//         console.error(err.message);
-//     }
-// });
+        res.json("Flight was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 
 
 // //Create flight
@@ -137,7 +137,7 @@ app.post("/brandon", async (req, res) => {
 // //Get all flight
 app.get("/brandon", async (req, res) => {
     try {
-        console.log("i am here");
+        //console.log("i am here");
         const allFlights = await pool.query("SELECT * FROM flights");
         res.json(allFlights.rows);
     } catch (err) {
