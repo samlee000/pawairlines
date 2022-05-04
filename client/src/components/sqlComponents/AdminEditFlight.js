@@ -19,7 +19,7 @@ const AdminEditFlight = ({ flights }) => {
                 body: JSON.stringify({origin, destination, airline, departure, plane})
             });
             
-            window.location = "/brandon";
+            window.location = "/admin_flights";
         } catch (err) {
             console.error(err.message);
         }

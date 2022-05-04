@@ -27,6 +27,13 @@ CREATE TABLE baggage(
     baggage_type VARCHAR(255)
 );
 
+CREATE TABLE pet(
+    pet_id SERIAL PRIMARY KEY, 
+    ticket_id VARCHAR(255),
+    species VARCHAR(255),
+    breed VARCHAR(255)
+);
+
 CREATE TABLE users(
     user_id SERIAL PRIMARY KEY, 
     first_name VARCHAR(255),

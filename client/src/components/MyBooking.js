@@ -1,14 +1,10 @@
-import React, { Fragment } from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect, Fragment } from 'react';
+import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import ListUserBooking from './sqlComponents/ListUserBooking';
 
-import UserInputPet from "./sqlComponents/UserInputPet";
-import UserListPets from "./sqlComponents/UserListPets";
-import UserEditPet from "./sqlComponents/UserEditPet";
-
-const Pet = () => {
+export const MyBooking = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -21,6 +17,7 @@ const Pet = () => {
         console.log(e.message);
         }
     };
+
 
   return (
     <div>
@@ -46,17 +43,16 @@ const Pet = () => {
       </Navbar>
 
 
-
-      <Fragment> 
-        <div className="container" color='#222c3c'>
-          <UserInputPet/>
-          <UserListPets/>
+      {/* Write Code Here */}
+      <Fragment>
+        <div className="container">
+            <h1>My Bookings</h1>
+          <ListUserBooking />
         </div>
       </Fragment>
-
     </div>
   )
 }
 
 
-export default Pet
+export default MyBooking

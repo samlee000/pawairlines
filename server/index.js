@@ -10,6 +10,63 @@ app.use(express.json());
 
 //Routes
 
+//post a booking
+app.post("/book", async (req, res) => {
+    try {
+        console.log("Entered post");
+        const {fname, lname, seat_type, flight_id, price, user_id} = req.body;
+        const newBook = await pool.query(
+            "INSERT INTO book (fname, lname, seat_type, flight_id, price, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+            [fname, lname, seat_type, flight_id, price, user_id]
+        );
+        res.json(newBook.rows[0]);
+        console.log("Post Completed.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+//get a booking
+app.get("/book", async (req, res) => {
+    try {
+        const allBook = await pool.query("SELECT * FROM book");
+        res.json(allBook.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Get bookings for current user (user)
+app.get("/book/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userBooks = await pool.query(
+            "SELECT * FROM book WHERE user_id = $1",
+            [id]
+        );
+        res.json(userBooks.rows);
+    } catch (err) {
+        console.error(err.message)
+    }
+});
+
+
+//delete a booking, need help with flight_id and fname
+app.delete("/book/:id/:id2", async (req, res) => {
+    try {
+        const { id, id2 } = req.params;
+        console.log(id, id2)
+        const { description } = req.body;
+        const deleteFlight = await pool.query("DELETE FROM book WHERE bookingid = $1 AND flight_id = $2",
+            [id, id2]
+        );
+
+        res.json("Flight was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
 // //Create flight
 app.post("/flight", async (req, res) => {
     try {
@@ -79,194 +136,28 @@ app.delete("/flight/:id", async (req, res) => {
     }
 });
 
-// //Create flight
-app.post("/brandon", async (req, res) => {
+
+// //Create a ticket
+app.post("/seat", async (req, res) => {
     try {
-        const { origin, destination, airline, departure, plane } = req.body;
-        const newFlight = await pool.query(
-            "INSERT INTO flights (origin, destination, airline, departure, plane_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-            [origin, destination, airline, departure, plane]
+        const { flight_id, user_id, classtype, price } = req.body;
+        const newTicket = await pool.query(
+            "INSERT INTO tickets (flight_id, user_id, class, price) VALUES($1, $2, $3, $4) RETURNING *",
+            [flight_id, user_id, classtype, price]
         );
 
-        res.json(newFlight.rows[0]);
+        res.json(newTicket.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
 });
 
-// //Get all flight
-app.get("/brandon", async (req, res) => {
-    try {
-        const allFlights = await pool.query("SELECT * FROM flights");
-        res.json(allFlights.rows);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Get a flight
-app.get("/brandon/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const flight = await pool.query("SELECT * FROM flights WHERE flight_id = $1", 
-            [id]
-        );
-
-        res.json(flight.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-})
-
-// //Update a flight
-app.put("/brandon/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { origin, destination, airline, departure, plane } = req.body;
-        const updateFlight = await pool.query("UPDATE flights SET origin = $1, destination = $2, airline = $3, departure = $4, plane_id = $5 WHERE flight_id = $6",
-            [origin, destination, airline, departure, plane, id]
-        );
-
-        res.json("Flight was updated!");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Delete a flight
-app.delete("/brandon/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { description } = req.body;
-        const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
-            [id]
-        );
-
-        res.json("Flight was deleted.");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Create pet
-app.post("/pet", async (req, res) => {
-    try {
-        const { ticket, species, breed } = req.body;
-
-        const petCO = await pool.query(
-            "SELECT pet_co FROM ticket WHERE ticket_id = $1",
-            [ticket]
-        );
-
-        if (petCO.rows[0].pet_co) {
-            console.log("already has pet carry on");
-        }
-        else {
-            const newPet = await pool.query(
-                "INSERT INTO pet (ticket_id, species, breed) VALUES ($1, $2, $3) RETURNING *",
-                [ticket, species, breed]
-            );
-    
-            res.json(newPet.rows[0]);
-    
-            const updateTicket = await pool.query(
-                "UPDATE ticket SET pet_co = true WHERE ticket_id = $1",
-                [ticket]
-            );
-    
-            res.json(updateTicket.rows[0]);
-        }
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Get all flight
-app.get("/pet", async (req, res) => {
-    try {
-        const allPets = await pool.query("SELECT * FROM pet");
-        res.json(allPets.rows);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Get a pet
-app.get("/pet/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const pet = await pool.query("SELECT * FROM pet WHERE pet_id = $1", 
-            [id]
-        );
-
-        res.json(pet.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-})
-
-// //Update a pet
-app.put("/pet/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { ticket, species, breed } = req.body;
-        const updatePet = await pool.query("UPDATE pet SET ticket_id = $1, species = $2, breed = $3 WHERE pet_id = $4",
-            [ticket, species, breed, id]
-        );
-
-        res.json("Pet was updated!");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Delete a pet
-app.delete("/pet/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        // const { description } = req.body;
-        const deletePet = await pool.query("DELETE FROM pet WHERE pet_id = $1",
-            [id]
-        );
-
-        res.json("Pet was deleted.");
-
-        /*
-        TODO: update ticket pet_co attribute to false
-        
-        const updateTicket = await pool.query(
-                "UPDATE ticket SET pet_co = false WHERE ticket_id = $1",
-                [ticket]
-            );
-    
-            res.json(updateTicket.rows[0]);
-        */
-    } catch (err) {
-        console.error(err.message);
-    }
-});
-
-// //Update a ticket
-app.put("/ticket/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const updateTicketFalse = await pool.query(
-            "UPDATE ticket SET pet_co = false WHERE ticket_id = $1",
-            [id]
-        );
-
-        res.json("Ticket pet_co updated!");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
 
 // //Get all tickets
 app.get("/seat", async (req, res) => {
     try {
         const allTickets = await pool.query("SELECT * FROM tickets");
         res.json(allTickets.rows);
-        res.json("Ticket pet_co updated!");
     } catch (err) {
         console.error(err.message);
     }
@@ -376,6 +267,174 @@ app.delete("/baggage/:id", async (req, res) => {
 });
 
 
+// //Create flight
+app.post("/brandon", async (req, res) => {
+    try {
+        const { origin, destination, airline, departure, plane } = req.body;
+        const newFlight = await pool.query(
+            "INSERT INTO flights (origin, destination, airline, departure, plane_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
+            [origin, destination, airline, departure, plane]
+        );
+
+        res.json(newFlight.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get all flight
+app.get("/brandon", async (req, res) => {
+    try {
+        const allFlights = await pool.query("SELECT * FROM flights");
+        res.json(allFlights.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get a flight
+app.get("/brandon/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const flight = await pool.query("SELECT * FROM flights WHERE flight_id = $1", 
+            [id]
+        );
+
+        res.json(flight.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+// //Update a flight
+app.put("/brandon/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { origin, destination, airline, departure, plane } = req.body;
+        const updateFlight = await pool.query("UPDATE flights SET origin = $1, destination = $2, airline = $3, departure = $4, plane_id = $5 WHERE flight_id = $6",
+            [origin, destination, airline, departure, plane, id]
+        );
+
+        res.json("Flight was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Delete a flight
+app.delete("/brandon/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { description } = req.body;
+        const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
+            [id]
+        );
+
+        res.json("Flight was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Create pet
+app.post("/pet", async (req, res) => {
+    try {
+        const { ticket, species, breed } = req.body;
+
+        const petCO = await pool.query(
+            "SELECT pet_co FROM tickets WHERE ticket_id = $1",
+            [ticket]
+        );
+
+        if (petCO.rows[0].pet_co == 'true') {
+            console.log("already has pet carry on");
+        }
+        else {
+            const newPet = await pool.query(
+                "INSERT INTO pet (ticket_id, species, breed) VALUES ($1, $2, $3) RETURNING *",
+                [ticket, species, breed]
+            );
+    
+            res.json(newPet.rows[0]);
+    
+            const updateTicket = await pool.query(
+                "UPDATE tickets SET pet_co = 'true' WHERE ticket_id = $1",
+                [ticket]
+            );
+    
+            res.json(updateTicket.rows[0]);
+        }
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get all flight
+app.get("/pet", async (req, res) => {
+    try {
+        const allPets = await pool.query("SELECT * FROM pet");
+        res.json(allPets.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Get a pet
+app.get("/pet/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const pet = await pool.query("SELECT * FROM pet WHERE pet_id = $1", 
+            [id]
+        );
+
+        res.json(pet.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+})
+
+// //Update a pet
+app.put("/pet/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { ticket, species, breed } = req.body;
+        const updatePet = await pool.query("UPDATE pet SET ticket_id = $1, species = $2, breed = $3 WHERE pet_id = $4",
+            [ticket, species, breed, id]
+        );
+
+        res.json("Pet was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// //Delete a pet
+app.delete("/pet/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        // const { description } = req.body;
+        const deletePet = await pool.query("DELETE FROM pet WHERE pet_id = $1",
+            [id]
+        );
+
+        res.json("Pet was deleted.");
+
+        /*
+        TODO: update ticket pet_co attribute to false
+        
+        const updateTicket = await pool.query(
+                "UPDATE ticket SET pet_co = false WHERE ticket_id = $1",
+                [ticket]
+            );
+    
+            res.json(updateTicket.rows[0]);
+        */
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
 // //Create user
 app.post("/user", async (req, res) => {
     try {
@@ -401,7 +460,7 @@ app.get("/user", async (req, res) => {
     }
 });
 
-// //Get a user
+// //Get a user by user_id
 app.get("/user/:id", async (req, res) => {
     try {
         const { id } = req.params;
@@ -414,6 +473,33 @@ app.get("/user/:id", async (req, res) => {
         console.error(err.message);
     }
 })
+
+// //Get a user by email
+// app.get("/useremail", async (req, res) => {
+//     try {
+//         const { email } = req.body;
+//         const userOne = await pool.query(`SELECT * FROM users WHERE user_email = 'quyen@gmail.com'`
+//         );
+
+//         res.json(userOne.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// })
+
+// //Get a user by email
+// app.get("/user/:name", async (req, res) => {
+//     try {
+//         const { name } = req.body;
+//         const userOne = await pool.query(`SELECT * FROM users WHERE first_name = $1`,
+//             [name]
+//         );
+
+//         res.json(userOne.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// })
 
 // //Update a user
 app.put("/user/:id", async (req, res) => {
@@ -440,6 +526,96 @@ app.delete("/user/:id", async (req, res) => {
         );
 
         res.json("User was deleted.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+
+// Insert new bill (admin only)
+app.post("/admin_bill", async (req, res) => {
+    try {
+        var data = req.body;
+        var total = parseFloat(data.subtotal) * 1.1;
+        const newBill = await pool.query(
+            "INSERT INTO billing (subtotal, total, user_id) VALUES($1, $2, $3) RETURNING *",
+            [data.subtotal, total, data.user_id]
+        );
+
+        res.json(newBill.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Get all bills for all users (admin only)
+app.get("/admin_bill", async (req, res) => {
+    try {
+        const allBills = await pool.query(
+            "SELECT * FROM billing"
+        );
+        res.json(allBills.rows);
+    } catch (err) {
+        console.error(err.message)
+    }
+});
+
+// Get bills for current user (user)
+app.get("/user_bill/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const userBills = await pool.query(
+            "SELECT * FROM billing WHERE user_id = $1",
+            [id]
+        );
+        res.json(userBills.rows);
+    } catch (err) {
+        console.error(err.message)
+    }
+});
+
+// Get a bill from any user (admin only)
+app.get("/admin_bill/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const bill = await pool.query(
+            "SELECT * FROM billing WHERE bill_id = $1",
+            [id]
+        );
+        res.json(flight.rows[0]);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Get a current bill (user)
+
+// Update bill (admin only)
+app.put("/admin_bill/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const { subtotal } = req.body;
+        var total = parseFloat(subtotal) * 1.1;
+        const updateBill = await pool.query(
+            "UPDATE billing SET subtotal = $1, total = $2 WHERE bill_id = $3",
+            [subtotal, total, id]
+        );
+
+        res.json("Bill was updated!");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+
+// Delete bill (admin only)
+app.delete("/admin_bill/:id", async (req, res) => {
+    try {
+        const { id } = req.params;
+        const deleteBill = await pool.query(
+            "DELETE FROM billing WHERE bill_id = $1",
+            [id]
+        );
+        res.json("Bill was deleted!");
     } catch (err) {
         console.error(err.message);
     }

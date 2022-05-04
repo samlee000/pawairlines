@@ -77,12 +77,12 @@ const Seat = ( ticket ) => {
       getTickets();
   }, []);
 
-  console.log(tickets);
+  console.log("tickets", tickets);
 
   const [ ticket_id, setticket_id ] = useState(null);
 
-    const updateSeat = async e => {
-        e.preventDefault();
+    const updateSeat = async () => {
+        // e.preventDefault();
         try {
           console.log({ticket_id})
             const body = { seat_number };
@@ -133,6 +133,8 @@ const Seat = ( ticket ) => {
               <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
               <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="mybookings">My Bookings</Nav.Link>
+              <Nav.Link href="user_bill">User Billing</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
@@ -148,9 +150,9 @@ const Seat = ( ticket ) => {
         <Card style={{ color: "#000" }}>
           
           <Card.Body>
-            <Form onSubmit={updateSeat()}>
-              <h2>Select Flight: 
-                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}} required="true">
+            <Form>
+              <h2>Select Ticket: 
+                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}}>
                   <option value="null"></option>
                   {optionTickets}
                 </select>
@@ -186,7 +188,7 @@ const Seat = ( ticket ) => {
             </div>
             <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
               {/* <Button className="seatButton mt-3 btn-block  w-90" variant="primary" onClick={e => updateSeat(e)}> Select this seat </Button> */}
-              <Button className="seatButton mt-3 btn-block  w-90" variant="primary" type='submit'> Select this seat </Button>
+              <Button className="seatButton mt-3 btn-block  w-90" variant="primary"onClick={e => updateSeat()}> Select this seat </Button>
             </div>
             <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
               <Button className="seatButton mt-3 btn-block  w-90" variant="success" onClick={e => createBaggage(e)}> Add Baggage </Button>

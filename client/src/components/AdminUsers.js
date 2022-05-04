@@ -61,11 +61,11 @@ const AdminUsers = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="admin_account">Account</Nav.Link>
+              {/* <Nav.Link href="admin_account">Account</Nav.Link> */}
               <Nav.Link href="admin_flights">All Flights</Nav.Link>
               <Nav.Link href="admin_users">All Users</Nav.Link>
-              <Nav.Link href="admin_planes">All Planes</Nav.Link>
-              <Nav.Link href="admin_bills">All Bills</Nav.Link>
+              {/* <Nav.Link href="admin_planes">All Planes</Nav.Link> */}
+              <Nav.Link href="admin_bill">All Bills</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
@@ -77,7 +77,7 @@ const AdminUsers = () => {
       {/* <h1>Look at Users</h1> */}
       <Fragment> 
         <div className="container">
-            <h1 className="mt-3">Manage All Flights</h1>
+            <h1 className="mt-3">Manage All Users</h1>
             <Fragment>
                 <table class="table mt-4">
                     <thead>

@@ -29,7 +29,7 @@ const LogIn = () => {
     }
   };
 
-  // console.log(myContext.current_user_email);
+  console.log(myContext.current_email);
 
 
   return (
@@ -61,14 +61,13 @@ const LogIn = () => {
       <header className="App-header">
 
         <h1 className="mb-4">Log In</h1>
-
         <Card style={{ color: "#000" }}>
           {/* <Card.Imgs src= {logo} /> */}
           <Card.Body>
           <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label className="h5">Email Address</Form.Label>
-            <Form.Control onChange={(e) => setEmail(e.target.value) & myContext.setCurrent_user_email(e.target.value)} className="emailControl" type="email" placeholder="email@email.com" />
+            <Form.Control onChange={(e) => setEmail(e.target.value) & myContext.setCurrent_email(e.target.value) & localStorage.setItem('email', e.target.value)} className="emailControl" type="email" placeholder="email@email.com" />
           </Form.Group>
           <Form.Group>
             <Form.Label className="h5">Password</Form.Label>

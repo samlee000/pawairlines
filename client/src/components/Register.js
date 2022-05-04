@@ -101,7 +101,7 @@ export const Register = () => {
             <div className="row">
               <div className="form-group col-md-6">
                 <label for="inputEmail4" className="h5">Email</label>
-                <input onChange={(e) => setEmail(e.target.value) & setUser_email(e.target.value)} type="email" className="form-control" id="inputEmail4" placeholder="Email" required="true"/>
+                <input onChange={(e) => setEmail(e.target.value) & setUser_email(e.target.value) & localStorage.setItem('email', e.target.value)} type="email" className="form-control" id="inputEmail4" placeholder="Email" required="true"/>
               </div>
               <div className="form-group col-md-6">
                 <label for="inputPassword4" className="h5">Password</label>

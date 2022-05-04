@@ -80,6 +80,8 @@ const Baggage = ( baggage ) => {
     let optionBaggage = baggages.map(baggage => (
       <option key={baggage.baggage_id} value={baggage.baggage_id}>{baggage.baggage_id}</option>
     ));
+
+    console.log(localStorage.getItem('current_user_id'));
     
 
   return (
@@ -95,6 +97,8 @@ const Baggage = ( baggage ) => {
               <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
               <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="mybookings">My Bookings</Nav.Link>
+              <Nav.Link href="user_bill">User Billing</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>

@@ -4,11 +4,12 @@ import Account from './components/Account';
 import Flights from './components/Flights';
 import Pet from './components/Pet';
 import Admin from './components/Admin';
-import AdminAccount from './components/AdminAccount';
+// import AdminAccount from './components/AdminAccount';
 import AdminUsers from './components/AdminUsers';
 import Book from './components/Book';
-// import Membership from './components/Membership';
-// import Flight from './components/Flight';
+import AdminBilling from './components/AdminBilling';
+import UserBilling from './components/UserBilling';
+import MyBooking from './components/MyBooking';
 import Seat from './components/Seat';
 import Baggage from './components/Baggage';
 import { Route, Routes } from 'react-router-dom';
@@ -20,11 +21,23 @@ import { useState } from 'react';
 
 
 function App() {
-  const [currentUserEmail, setCurrent_user_email] = useState('initial email');
+  const [currentFirstName, setCurrent_first_name] = useState('initial email');
+  const [currentLastName, setCurrent_last_name] = useState('initial email');
+  const [currentAddress, setCurrent_address] = useState('initial email');
+  const [currentEmail, setCurrent_email] = useState('initial email');
+  const [currentGender, setCurrent_gender] = useState('initial email');
+  const [currentAge, setCurrent_age] = useState('initial email');
+  const [currentPhoneNumber, setCurrent_phone_number] = useState('initial email');
 
   const userProfile = {
-    current_user_email: currentUserEmail,
-    setCurrent_user_email,
+    current_email: currentEmail,
+    current_first_name: currentFirstName,
+    current_last_name: currentLastName,
+    current_address: currentAddress,
+    current_phone_number: currentPhoneNumber,
+    current_gender: currentGender,
+    current_age: currentAge,
+    setCurrent_email,
   };
 
 
@@ -40,7 +53,7 @@ function App() {
           <Route path='/admin_flights' element={<ProtectedRoute><Flights /></ProtectedRoute>} />
           <Route path='/pet' element={<ProtectedRoute><Pet /></ProtectedRoute>} />
           <Route path='/admin' element={<Admin />} />
-          <Route path='/admin_account' element={<ProtectedRoute><AdminAccount /></ProtectedRoute>} />
+          {/* <Route path='/admin_account' element={<ProtectedRoute><AdminAccount /></ProtectedRoute>} /> */}
           <Route path='/admin_users' element={<ProtectedRoute><AdminUsers /></ProtectedRoute>} />
           <Route path='/book' element={<ProtectedRoute><Book /></ProtectedRoute>} />
           {/* <Route path='/membership' element={<ProtectedRoute><Membership /></ProtectedRoute>} /> */}
@@ -48,6 +61,9 @@ function App() {
           <Route path='/seat' element={<ProtectedRoute><Seat /></ProtectedRoute>} />
           <Route path='/account' element={<ProtectedRoute><Account /></ProtectedRoute>} />
           <Route path='/baggage' element={<ProtectedRoute><Baggage /></ProtectedRoute>} />
+          <Route path='/admin_bill' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
+          <Route path='/user_bill' element={<ProtectedRoute><UserBilling /></ProtectedRoute>} />
+          <Route path='/mybookings' element={<ProtectedRoute><MyBooking /></ProtectedRoute>} />
         </Routes>
       </AppContext.Provider>
       </AuthContextProvider>

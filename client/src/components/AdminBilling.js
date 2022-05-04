@@ -1,14 +1,15 @@
-import React, { Fragment } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+// import NavBar from './NavBar.js'
+import InputBill from './sqlComponents/InputBillAdmin.js'
+import EditBill from './sqlComponents/EditBill.js'
+import ListAdminBill from './sqlComponents/ListAdminBill.js'
 
-import AdminInputFlight from "./sqlComponents/AdminInputFlight";
-import AdminListFlights from "./sqlComponents/AdminListFlights";
-import AdminEditFlight from "./sqlComponents/AdminEditFlight";
 
-const Flights = () => {
+export const AdminBilling = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -21,6 +22,23 @@ const Flights = () => {
         console.log(e.message);
         }
     };
+
+  const [subtotal, setSubtotal] = useState([]);
+
+  const getSubtotal = async () => {
+    try {
+      const response = await fetch("http://localhost:4000/admin_bill");
+      const jsonData = await response.json();
+
+      setSubtotal(jsonData);
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getSubtotal();
+  }, [])
 
   return (
     <div>
@@ -46,16 +64,18 @@ const Flights = () => {
         </Container>
       </Navbar>
 
-      <Fragment> 
+
+      {/* Write Code Here */}
+      <h1>Bill Something</h1>
+      <Fragment>
         <div className="container">
-          <AdminInputFlight/>
-          <AdminListFlights/>
+          <InputBill />
+          <ListAdminBill />
         </div>
       </Fragment>
-
     </div>
   )
 }
 
 
-export default Flights
+export default AdminBilling

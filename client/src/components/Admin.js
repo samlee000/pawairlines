@@ -17,7 +17,7 @@ const Admin = () => {
     setError('')
     try {
       await signInAdmin(email, password)
-      navigate('/admin_account')
+      navigate('/admin_flights')
     } catch (e) {
       setError(e.message)
       console.log(e.message)

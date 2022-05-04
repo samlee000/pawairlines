@@ -1,14 +1,11 @@
-import React, { Fragment } from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
+// import NavBar from './NavBar.js'
+import React, { useState, useEffect, Fragment } from 'react';
+import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-bootstrap';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import ListUserBill from './sqlComponents/ListUserBill.js';
 
-import InputFlight from "./sqlComponents/InputFlight";
-import ListFlight from "./sqlComponents/ListFlight";
-import EditFlight from "./sqlComponents/EditFlight";
-
-const Flight = () => {
+export const UserBilling = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -22,6 +19,7 @@ const Flight = () => {
         }
     };
 
+
   return (
     <div>
       <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
@@ -30,9 +28,13 @@ const Flight = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
+              <Nav.Link href="account">My Account</Nav.Link>
               <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="flight">Flight Status</Nav.Link>
+              <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
+              <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="mybookings">My Bookings</Nav.Link>
+              <Nav.Link href="user_bill">User Billing</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
@@ -42,16 +44,16 @@ const Flight = () => {
       </Navbar>
 
 
-      <h1>Look at Flights</h1>
-      <Fragment> 
+      {/* Write Code Here */}
+      <Fragment>
         <div className="container">
-          <InputFlight/>
-          <ListFlight/>
+            <h1>My Bills</h1>
+          <ListUserBill />
         </div>
       </Fragment>
-      
     </div>
   )
 }
 
-export default Flight
+
+export default UserBilling

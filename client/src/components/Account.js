@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
@@ -21,37 +21,51 @@ const Account = () => {
       }
   };
 
-  const [first_name, setFirst_name] = useState("");
-  const [last_name, setLast_name] = useState("");
-  const [age, setAge] = useState("");
-  const [gender, setGender] = useState("");
-  const [user_address, setUser_address] = useState("");
-  const [user_email, setUser_email] = useState("");
-  const [phone_number, setPhone_number] = useState("");
+  const [fname, setFirst_name] = useState("");
+  const [lname, setLast_name] = useState("");
+  const [age_, setAge] = useState("");
+  const [gender_, setGender] = useState("");
+  const [user_address_, setUser_address] = useState("");
+  const [user_email_, setUser_email] = useState("");
+  const [phone_number_, setPhone_number] = useState("");
 
-  console.log(myContext.current_user_email);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   setError('');
-  //   try {
-  //     const body = { first_name, last_name, age, gender, user_address, user_email, phone_number };
-  //     const response = await fetch(`http://localhost:4000/user/${users.flight_id}`, {
-  //         method: "POST",
-  //         headers: { "Content-Type": "application/json" },
-  //         body: JSON.stringify(body)
-  //     });
+  const [users, setUser] = useState([]);
 
-  //     await createUser(email, password);
-  //     // navigate('/book')
-  //     window.location = "/book";
-  //   } catch (e) {
-  //     setError(e.message);
-  //     console.log(e.message);
-  //   }
-  // };
+  const getUser = async () => {
+    try {
+        const response = await fetch(`http://localhost:4000/user`);
+        const jsonData = await response.json();
 
-  // const location = useLocation();
+        setUser(jsonData);
+        localStorage.setItem('id', users[7].first_name);
+        console.log(users[7]);
+        for (var i = 0; i < users.length; i++) {
+          if (users[i].user_email == (localStorage.getItem('email'))) {
+            console.log('index', i);
+            setFirst_name(users[i].first_name);
+            setLast_name(users[i].last_name);
+            setAge(users[i].age);
+            setGender(users[i].gender);
+            setUser_address(users[i].user_address);
+            setUser_email(users[i].user_email);
+            setPhone_number(users[i].phone_number);
+            localStorage.setItem('current_user_id', users[i].user_id);
+            localStorage.setItem('current_fname', users[i].first_name);
+            localStorage.setItem('current_lname', users[i].last_name);
+          }
+        } 
+
+    } catch (err) {
+        console.error(err.message);
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, []);
+
+  console.log("users", users);
 
   return (
     <div>
@@ -66,6 +80,8 @@ const Account = () => {
               <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
               <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="mybookings">My Bookings</Nav.Link>
+              <Nav.Link href="user_bill">User Billing</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
@@ -83,52 +99,57 @@ const Account = () => {
           {/* <Card.Imgs src= {logo} /> */}
           <Card.Body>
           <Form>
-            <h1>sdfasfasf</h1>
-            {/* <h1>{location.state.current_user_email}</h1> */}
-          {/* <div className="row">
+            {/* <h1>{localStorage.getItem('email')}</h1> */}
+            {/* <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" required="true">
+                  <option value="null"></option>
+                  {optionUsers}
+                </select> */}
+            {/* <p>{user}</p> */}
+          <div className="row">
               <div className="form-group col-md-6">
                 <label for="inputFName" className="h5">First Name</label>
-                <input onChange={(e) => setFirst_name(e.target.value)} type="text" className="form-control" id="inputFName" placeholder="First Name" required="true"/>
+                <input type="text" onChange ={getUser()} value={fname} className="form-control" id="inputFName" readOnly/>
               </div>
               <div className="form-group col-md-6">
                 <label for="inputLName" className="h5">Last Name</label>
-                <input onChange={(e) => setLast_name(e.target.value)} type="text" className="form-control" id="inputLName" placeholder="Last Name" required="true"/>
+                <input type="text" value={lname} className="form-control" id="inputLName" readOnly/>
               </div>
             </div>
             <div className="form-group">
               <label for="inputAddress" className="h5">Address</label>
-              <input onChange={(e) => setUser_address(e.target.value)} type="text" className="form-control" id="inputAddress" placeholder="1234 Main St" required="true"/>
+              <input type="text" value={user_address_} className="form-control" id="inputAddress" readOnly/>
             </div>
             <div className="form-group">
               <label for="phonenumber" className="h5">Phone Number</label>
-              <input onChange={(e) => setPhone_number(e.target.value)} type="text" className="form-control" id="phonenumber" placeholder="000-000-0000" required="true"/>
+              <input type="text" value={phone_number_} className="form-control" id="phonenumber" readOnly/>
             </div>
 
             <div className="row">
               <div className="form-group col-md-6">
                 <label for="inputEmail4" className="h5">Email</label>
-                <input onChange={(e) => setEmail(e.target.value) & setUser_email(e.target.value)} type="email" className="form-control" id="inputEmail4" placeholder="Email" required="true"/>
+                <input type="email" value={user_email_} className="form-control" id="inputEmail4" readOnly/>
               </div>
-              <div className="form-group col-md-6">
+              {/* <div className="form-group col-md-6">
                 <label for="inputPassword4" className="h5">Password</label>
                 <input onChange={(e) => setPassword(e.target.value)} type="password" className="form-control" id="inputPassword4" placeholder="Password" required="true"/>
-              </div>
+              </div> */}
             </div>
 
             <div className="form-row">
               <div className="form-group col-md-4">
                 <label for="gender" className="h5">Gender</label>
-                <select id="gender" className="form-control" onChange={(e) => setGender(e.target.value)} required="true">
+                  <input type="text" value={gender_} className="form-control" id="inputGender" readOnly/>
+                {/* <select id="gender" className="form-control" onChange={(e) => setGender(e.target.value)} required="true">
                   <option selected className="h5">Choose...</option>
                   <option>Male</option>
                   <option>Female</option>
-                </select>
+                </select> */}
               </div>
               <div className="form-group col-md-2">
                 <label for="inputAge" className="h5">Age</label>
-                <input onChange={(e) => setAge(e.target.value)} type="text" className="form-control" id="inputAge" required="true"/>
+                <input type="text" value={age_} className="form-control" id="inputAge" readOnly/>
               </div>
-            </div> */}
+            </div>
           </Form>
           </Card.Body>  
         </Card>
