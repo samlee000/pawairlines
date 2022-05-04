@@ -180,7 +180,6 @@ export const Book = () => {
                 <h3 className='mt-3'>Total Amount: {price}</h3>
               </Card>
               <button className="btn btn-success">Confirm and Proceed to Seat Selection</button>
-              <div><button className="btn btn-success" onClick={event => window.location.href = '/seat'}>Proceed to Seat Selection</button></div>
             </div>
           </form>
           <div><button className="btn btn-danger" onClick={() => deleteBooking(bookings.flight_id)}>Cancel Booking</button></div>
