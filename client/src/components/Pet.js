@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
-export const Book = () => {
+import UserInputPet from "./sqlComponents/UserInputPet";
+import UserListPets from "./sqlComponents/UserListPets";
+import UserEditPet from "./sqlComponents/UserEditPet";
+
+const Pet = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -40,10 +44,17 @@ export const Book = () => {
 
 
       {/* Write Code Here */}
-      <h1>Book Something</h1>
+      <h1>Pet</h1>
+      <Fragment> 
+        <div className="container">
+          <UserInputPet/>
+          <UserListPets/>
+        </div>
+      </Fragment>
+
     </div>
   )
 }
 
 
-export default Book
+export default Pet

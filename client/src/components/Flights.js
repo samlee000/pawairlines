@@ -1,10 +1,14 @@
-import React from 'react'
+import React, { Fragment } from 'react';
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
-export const Book = () => {
+import AdminInputFlight from "./sqlComponents/AdminInputFlight";
+import AdminListFlights from "./sqlComponents/AdminListFlights";
+import AdminEditFlight from "./sqlComponents/AdminEditFlight";
+
+const Flights = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -26,11 +30,15 @@ export const Book = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="pet">Pet Selection</Nav.Link>
-              <Nav.Link href="seat">Seat Selection</Nav.Link>
-              <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="admin_account">Account</Nav.Link>
+              <Nav.Link href="admin_flights">All Flights</Nav.Link>
+              <Nav.Link href="admin_users">All Users</Nav.Link>
+              <Nav.Link href="admin_planes">All Planes</Nav.Link>
+              <Nav.Link href="admin_bills">All Bills</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
+                {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
+                <NavDropdown.Item href="login">Login</NavDropdown.Item>
+                <NavDropdown.Divider /> */}
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -38,12 +46,16 @@ export const Book = () => {
         </Container>
       </Navbar>
 
+      <Fragment> 
+        <div className="container">
+          <AdminInputFlight/>
+          <AdminListFlights/>
+        </div>
+      </Fragment>
 
-      {/* Write Code Here */}
-      <h1>Book Something</h1>
     </div>
   )
 }
 
 
-export default Book
+export default Flights

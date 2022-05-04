@@ -77,8 +77,9 @@ const AdminUsers = () => {
       {/* <h1>Look at Users</h1> */}
       <Fragment> 
         <div className="container">
+            <h1 className="mt-3">Manage All Flights</h1>
             <Fragment>
-                <table class="table">
+                <table class="table mt-4">
                     <thead>
                     <tr>
                         <th>First Name</th>
