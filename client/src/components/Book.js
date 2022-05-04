@@ -6,7 +6,6 @@ import { UserAuth } from '../context/AuthContext';
 
 
 
-
 export const Book = () => {
   const { logout } = UserAuth();
   const navigate = useNavigate();
@@ -24,16 +23,19 @@ export const Book = () => {
   const [lname, setLName] = useState("");
   const [seat_type, setSeatType] = useState("");
   const [flights, setFlights] = useState([]);
+  const[bookings, setBookings] = useState([]);
+  const[booking_id, setBookingID] = useState(null);
   const [flight_id, setFlightID] = useState(null);
   const [flight, setFlight] = useState([]);
   var price = seat_type === 'Economy' ? "$100" : seat_type === 'Business' ? "$200" : "$300";
+  var user_id = "10";
   /* add flight id, booking id, departure, arrival */
   const onSubmitForm = async e => {
     try {
       const response = await fetch("http://localhost:4000/book", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ fname, lname, seat_type, flight_id, price })
+        body: JSON.stringify({ fname, lname, seat_type, flight_id, price, user_id})
       });
       window.location = "/seat";
       { }
@@ -55,21 +57,32 @@ export const Book = () => {
       console.error(err.message);
     }
   };
-  const deleteBooking = async (id) => {
-    try {
-      const deleteFLight = await fetch(`http://localhost:4000/book/${id}`, {
-        method: "DELETE"
-      });
+  // const getBookings = async() => {
+  //   try{
+  //     const response = await fetch("http://localhost:4000/book");
+  //     const jsonData = await response.json();
 
-      setFlight(flight.filter(flights => flights.flight_id !== id));
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+  //     setBookings(jsonData);
+  //   }catch(err) {
+  //     console.error(err.message);
+  //   }
+  // };
+  // const deleteBooking = async (id) => {
+  //   try {
+  //     const deleteFLight = await fetch(`http://localhost:4000/book/${id}`, {
+  //       method: "DELETE"
+  //     });
+
+  //     setFlight(flight.filter(flights => flights.flight_id !== id));
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // };
 
 
   useEffect(() => {
     getFlightList();
+    // getBookings();
   }, []);
 
   return (
@@ -168,9 +181,9 @@ export const Book = () => {
               </Card>
               <button className="btn btn-success">Confirm and Proceed to Seat Selection</button>
               <div><button className="btn btn-success" onClick={event => window.location.href = '/seat'}>Proceed to Seat Selection</button></div>
-              <div><button className="btn btn-danger" onClick={() => deleteBooking(flights.flight_id)}>Cancel Booking</button></div>
             </div>
           </form>
+          <div><button className="btn btn-danger" onClick={() => deleteBooking(bookings.flight_id)}>Cancel Booking</button></div>
         </Fragment>
       </header>
     </div>

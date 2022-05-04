@@ -14,10 +14,10 @@ app.use(express.json());
 app.post("/book", async (req, res) => {
     try {
         console.log("Entered post");
-        const {fname, lname, seat_type, flight_id, price} = req.body;
+        const {fname, lname, seat_type, flight_id, price, user_id} = req.body;
         const newBook = await pool.query(
-            "INSERT INTO book (fname, lname, seat_type, flight_id, price) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-            [fname, lname, seat_type, flight_id, price]
+            "INSERT INTO book (fname, lname, seat_type, flight_id, price, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
+            [fname, lname, seat_type, flight_id, price, user_id]
         );
         res.json(newBook.rows[0]);
         console.log("Post Completed.");
