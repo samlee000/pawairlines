@@ -6,6 +6,7 @@ CREATE TABLE flights (
 CREATE TABLE billing (
     bill_id SERIAL PRIMARY KEY,
     user_id SERIAL,
+    flight_id SERIAL, 
     routing_no SERIAL,
     subtotal DECIMAL(50, 2),
     total DECIMAL(50, 2)
@@ -37,6 +38,10 @@ CREATE TABLE users(
     user_address VARCHAR(255),
     user_email VARCHAR(255),
     phone_number VARCHAR(255)
+);
+
+CREATE TABLE book(
+    booking_id SERIAL 
 );
 
 INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) 

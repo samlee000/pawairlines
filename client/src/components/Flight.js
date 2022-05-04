@@ -1,5 +1,4 @@
 import React, { Fragment } from 'react';
-import 'bootstrap/dist/css/bootstrap.min.css';
 import NavBar from './NavBar.js'
 
 import InputFlight from "./sqlComponents/InputFlight";

@@ -2,25 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button, Card, Form} from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import NavBar from './NavBar.js'
 import "./Baggage.css";
 import checkedbag from "./images/checkedbag.jpg";
 import carryon from "./images/carryon.jpg";
 import personal from "./images/personal.jpg";
 
 const Baggage = ( baggage ) => {
-
-    const { logout } = UserAuth();
-    const navigate = useNavigate();
-    
-    const handleLogout = async () => {
-        try {
-        await logout();
-        navigate('/');
-        console.log('You are logged out')
-        } catch (e) {
-        console.log(e.message);
-        }
-    };
 
     const [baggages, setBaggages] = useState([]);
 
@@ -84,24 +72,7 @@ const Baggage = ( baggage ) => {
 
   return (
     <div>
-        <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
-        <Container >
-          <Navbar.Brand > Paw Airlines </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="membership">Membership</Nav.Link>
-              <Nav.Link href="flight">Flight Status</Nav.Link>
-              <Nav.Link href="seat">Seat Selection</Nav.Link>
-              <Nav.Link href="baggage">Baggage</Nav.Link>
-              <NavDropdown title="Logout" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+        <NavBar />
 
       <header className="App-header">
 

@@ -1,4 +1,5 @@
 import React, { Fragment, useState } from "react";
+import email from '../LogIn.js'
 
 const InputBill = () => {
 
@@ -6,18 +7,25 @@ const InputBill = () => {
 
     const onSubmitForm = async e => {
         try {
-            const body = { subtotal }
-            const response = await fetch("http://localhost:4000/adminbilling", {
+            console.log("InputUserBill")
+            const user_id = await fetch("http://localhost:4000/useridfromemail}", {
+                method: "GET",
+                headers: { "Content-Type": "application/json"},
+                body: JSON.stringify(email)
+            });
+            const body = { subtotal, user_id }
+            const response = await fetch("http://localhost:4000/admin_bill", {
                 method: "POST",
                 headers: { "Content-Type": "application/json"},
-                subtotal: JSON.stringify(body)
+                body: JSON.stringify(body)
             });
 
-            window.location = "/adminbilling";
+            window.location = "/admin_bill";
         } catch (err) {
             console.error(err.message);
         }
     };
+
 
     return (
         <Fragment>

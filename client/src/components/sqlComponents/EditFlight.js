@@ -22,26 +22,26 @@ const EditFlight = ({ flights }) => {
     }
 
     return <Fragment>
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target={`#id${flights.flight_id}`}>
+        <button type="button" className="btn btn-primary" data-toggle="modal" data-target={`#id${flights.flight_id}`}>
         Edit
         </button>
 
         {/* <!-- Modal --> */}
-        <div class="modal fade" id={`id${flights.flight_id}`} tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" onClick={() => setDescription(flights.description)}>
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Edit Flight</h5>
-                <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close" onClick={() => setDescription(flights.description)}>
+        <div className="modal fade" id={`id${flights.flight_id}`} tabIndex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" onClick={() => setDescription(flights.description)}>
+        <div className="modal-dialog" role="document">
+            <div className="modal-content">
+            <div className="modal-header">
+                <h5 className="modal-title" id="exampleModalLabel">Edit Flight</h5>
+                <button type="button" className="btn-close" data-dismiss="modal" aria-label="Close" onClick={() => setDescription(flights.description)}>
                 {/* <span aria-hidden="true">&times;</span> */}
                 </button>
             </div>
-            <div class="modal-body">
+            <div className="modal-body">
                 <input type="text" className="form-control" value={description} onChange={e => setDescription(e.target.value)}/>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-danger" data-dismiss="modal" onClick={() => setDescription(flights.description)}>Close</button>
-                <button type="button" class="btn btn-primary" onClick={e => updateDescription(e)}>Save changes</button>
+            <div className="modal-footer">
+                <button type="button" className="btn btn-danger" data-dismiss="modal" onClick={() => setDescription(flights.description)}>Close</button>
+                <button type="button" className="btn btn-primary" onClick={e => updateDescription(e)}>Save changes</button>
             </div>
             </div>
         </div>

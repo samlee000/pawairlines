@@ -19,7 +19,7 @@ const InputFlight = () => {
         }
     };
 
-
+    
     return (
         <Fragment>
             <h1 className="mt-3">Flight List</h1>

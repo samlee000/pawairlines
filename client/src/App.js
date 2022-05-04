@@ -36,8 +36,8 @@ function App() {
           <Route path='/flight' element={<ProtectedRoute><Flight /></ProtectedRoute>} />
           <Route path='/seat' element={<ProtectedRoute><Seat /></ProtectedRoute>} />
           <Route path='/baggage' element={<ProtectedRoute><Baggage /></ProtectedRoute>} />
-          <Route path='/adminbilling' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
-          <Route path='/userbilling' element={<ProtectedRoute><UserBilling /></ProtectedRoute>} />
+          <Route path='/admin_bill' element={<ProtectedRoute><AdminBilling /></ProtectedRoute>} />
+          <Route path='/user_bill' element={<ProtectedRoute><UserBilling /></ProtectedRoute>} />
         </Routes>
       </AuthContextProvider>
 

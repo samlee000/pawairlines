@@ -35,7 +35,7 @@ const ListFlight = () => {
 
     console.log(flight);
     return <Fragment>
-        <table class="table">
+        <table className="table">
             <thead>
             <tr>
                 <th>Description</th>

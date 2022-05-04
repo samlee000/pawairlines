@@ -5,7 +5,7 @@ import { UserAuth } from '../context/AuthContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
-const NavBar = () => {
+const AdminNavBar = () => {
     const { logout } = UserAuth();
     const navigate = useNavigate();
     
@@ -26,16 +26,12 @@ const NavBar = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
-              <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="membership">Membership</Nav.Link>
-              <Nav.Link href="flight">Flight Status</Nav.Link>
-              <Nav.Link href="admin_bill">Admin Billing</Nav.Link>
-              <Nav.Link href="user_bill">User Billing</Nav.Link>
-              <Nav.Link href="baggage">Baggage</Nav.Link>
+              <Nav.Link href="admin_account">Account</Nav.Link>
+              <Nav.Link href="admin_flights">All Flights</Nav.Link>
+              <Nav.Link href="admin_users">All Users</Nav.Link>
+              <Nav.Link href="admin_planes">All Planes</Nav.Link>
+              <Nav.Link href="admin_bill">All Bills</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
-                {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
-                <NavDropdown.Item href="login">Login</NavDropdown.Item>
-                <NavDropdown.Divider /> */}
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>
             </Nav>
@@ -45,4 +41,4 @@ const NavBar = () => {
     )
 };
 
-export default NavBar
+export default AdminNavBar
