@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './Register.css';
 
 export const Register = () => {
+  // const toAccount = () => {
+
+  // }
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -33,8 +36,8 @@ export const Register = () => {
       });
 
       await createUser(email, password);
-      // navigate('/book')
-      window.location = "/book";
+      navigate('/account', {state:{current_user_email:{user_email}}})
+      // window.location = "/account";
     } catch (e) {
       setError(e.message);
       console.log(e.message);

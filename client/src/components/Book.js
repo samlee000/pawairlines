@@ -26,6 +26,7 @@ export const Book = () => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
+              <Nav.Link href="account">My Account</Nav.Link>
               <Nav.Link href="book">Book A Flight</Nav.Link>
               <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>

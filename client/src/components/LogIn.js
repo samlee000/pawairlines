@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
+import AppContext from '../context/AppContext';
 import { Navbar, Container, Nav, NavDropdown, Button, Form, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './LogIn.css';
 
 const LogIn = () => {
+  const myContext = useContext(AppContext);
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -18,7 +20,7 @@ const LogIn = () => {
     setError('')
     try {
       await signIn(email, password)
-      navigate('/book')
+      navigate('/account')
     } catch (e) {
       setError(e.message)
       console.log(e.message)
@@ -26,6 +28,8 @@ const LogIn = () => {
 
     }
   };
+
+  // console.log(myContext.current_user_email);
 
 
   return (
@@ -64,14 +68,16 @@ const LogIn = () => {
           <Form onSubmit={handleSubmit}>
           <Form.Group>
             <Form.Label className="h5">Email Address</Form.Label>
-            <Form.Control onChange={(e) => setEmail(e.target.value)} className="emailControl" type="email" placeholder="email@email.com" />
+            <Form.Control onChange={(e) => setEmail(e.target.value) & myContext.setCurrent_user_email(e.target.value)} className="emailControl" type="email" placeholder="email@email.com" />
           </Form.Group>
           <Form.Group>
             <Form.Label className="h5">Password</Form.Label>
             <Form.Control onChange={(e) => setPassword(e.target.value)} type="password" placeholder="Password" />
           </Form.Group>
           <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
-            <Button className="loginButton mt-3 btn-block  w-90" variant="primary" type="submit"> Login </Button>
+            <Button className="loginButton mt-3 btn-block  w-90" variant="primary" type="submit">
+               Login 
+            </Button>
           </div>
           </Form>
             <Card.Text>

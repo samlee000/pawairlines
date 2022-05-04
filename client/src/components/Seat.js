@@ -128,6 +128,7 @@ const Seat = ( ticket ) => {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
+              <Nav.Link href="account">My Account</Nav.Link>
               <Nav.Link href="book">Book A Flight</Nav.Link>
               <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="seat">Seat Selection</Nav.Link>
@@ -147,9 +148,9 @@ const Seat = ( ticket ) => {
         <Card style={{ color: "#000" }}>
           
           <Card.Body>
-            <Form>
+            <Form onSubmit={updateSeat()}>
               <h2>Select Flight: 
-                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" required="true" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}}>
+                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}} required="true">
                   <option value="null"></option>
                   {optionTickets}
                 </select>
@@ -184,7 +185,8 @@ const Seat = ( ticket ) => {
                 <button className="btn" type="button" onClick={() => set_seat_number("D4")}> {outline16 ? <MdOutlineChair size={70} onClick={() => handleChangeActive16() & setOutline2(<MdOutlineChair size={70}/>) & setOutline3(<MdOutlineChair size={70}/>) & setOutline4(<MdOutlineChair size={70}/>) & setOutline5(<MdOutlineChair size={70}/>) & setOutline6(<MdOutlineChair size={70}/>) & setOutline7(<MdOutlineChair size={70}/>) & setOutline8(<MdOutlineChair size={70}/>) & setOutline9(<MdOutlineChair size={70}/>) & setOutline10(<MdOutlineChair size={70}/>) & setOutline11(<MdOutlineChair size={70}/>) & setOutline12(<MdOutlineChair size={70}/>) & setOutline13(<MdOutlineChair size={70}/>) & setOutline14(<MdOutlineChair size={70}/>) & setOutline15(<MdOutlineChair size={70}/>) & setOutline1(<MdOutlineChair size={70}/>)}/> : <MdChair size={70} onClick={() => handleChangeActive16() & setOutline2(<MdOutlineChair size={70}/>) & setOutline3(<MdOutlineChair size={70}/>) & setOutline4(<MdOutlineChair size={70}/>) & setOutline5(<MdOutlineChair size={70}/>) & setOutline6(<MdOutlineChair size={70}/>) & setOutline7(<MdOutlineChair size={70}/>) & setOutline8(<MdOutlineChair size={70}/>) & setOutline9(<MdOutlineChair size={70}/>) & setOutline10(<MdOutlineChair size={70}/>) & setOutline11(<MdOutlineChair size={70}/>) & setOutline12(<MdOutlineChair size={70}/>) & setOutline13(<MdOutlineChair size={70}/>) & setOutline14(<MdOutlineChair size={70}/>) & setOutline15(<MdOutlineChair size={70}/>) & setOutline1(<MdOutlineChair size={70}/>)}/> } </button>
             </div>
             <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
-              <Button className="seatButton mt-3 btn-block  w-90" variant="primary" onClick={e => updateSeat(e)}> Select this seat </Button>
+              {/* <Button className="seatButton mt-3 btn-block  w-90" variant="primary" onClick={e => updateSeat(e)}> Select this seat </Button> */}
+              <Button className="seatButton mt-3 btn-block  w-90" variant="primary" type='submit'> Select this seat </Button>
             </div>
             <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
               <Button className="seatButton mt-3 btn-block  w-90" variant="success" onClick={e => createBaggage(e)}> Add Baggage </Button>

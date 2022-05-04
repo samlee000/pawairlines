@@ -2,7 +2,12 @@ CREATE DATABASE pawsairline;
 
 CREATE TABLE flights(
     flight_id SERIAL PRIMARY KEY, 
-    description VARCHAR(255)
+    description VARCHAR(255),
+    origin VARCHAR(255),
+    destination VARCHAR(255),
+    airline VARCHAR(255),
+    departure VARCHAR(255),
+    plane_id VARCHAR(255)
 );
 
 CREATE TABLE tickets(
