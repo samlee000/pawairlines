@@ -149,7 +149,7 @@ const Seat = ( ticket ) => {
           <Card.Body>
             <Form>
               <h2>Select Flight: 
-                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}}>
+                <select className="form-select form-select-lg mb-3 mt-3" aria-label=".form-select-lg example" required="true" onChange={e => { const ticket_id = e.target.value; setticket_id(ticket_id);}}>
                   <option value="null"></option>
                   {optionTickets}
                 </select>
