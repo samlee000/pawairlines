@@ -18,6 +18,13 @@ const LogIn = () => {
     setError('')
     try {
       await signIn(email, password)
+      // var user_email = encodeURIComponent(email);
+      // const response = await fetch(`http://localhost:4000/useridfromphone${email}`, {
+      //     method: "GET",
+      //     headers: { "Content-Type": "application/json" },
+      // });
+      // console.log("login user id");
+      // console.log(response);
       navigate('/book')
     } catch (e) {
       setError(e.message)

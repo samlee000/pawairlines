@@ -1,6 +1,11 @@
 CREATE TABLE flights (
     flight_id SERIAL PRIMARY KEY,
-    description VARCHAR(255)
+    schedule VARCHAR(255),
+    destination VARCHAR(255),
+    origin VARCHAR(255),
+    airline VARCHAR(255),
+    exit_terminal VARCHAR(255),
+    entry_terminal VARCHAR(255)
 );
 
 CREATE TABLE billing (
@@ -40,8 +45,18 @@ CREATE TABLE users(
     phone_number VARCHAR(255)
 );
 
+CREATE TABLE membership(
+    membership_id SERIAL PRIMARY KEY,
+    user_id SERIAL,
+    membership_type int,
+    membership_duration int
+);
+
 CREATE TABLE book(
-    booking_id SERIAL 
+    booking_id SERIAL,
+    fname VARCHAR(255),
+    lname VARCHAR(255),
+    seat_type VARCHAR(255)
 );
 
 INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) 

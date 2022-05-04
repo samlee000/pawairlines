@@ -38,7 +38,13 @@ const ListFlight = () => {
         <table className="table">
             <thead>
             <tr>
-                <th>Description</th>
+                <th>Flight ID</th>
+                <th>Schedule</th>
+                <th>Destination</th>
+                <th>Origin</th>
+                <th>Airline</th>
+                <th>Exit Terminal</th>
+                <th>Entry Terminal</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -46,7 +52,13 @@ const ListFlight = () => {
             <tbody>
                 {flight.map(flights => (
                     <tr key={flights.flight_id}>
-                        <td>{flights.description}</td>
+                        <td>{flights.flight_id}</td>
+                        <td>{flights.schedule}</td>
+                        <td>{flights.destination}</td>
+                        <td>{flights.origin}</td>
+                        <td>{flights.airline}</td>
+                        <td>{flights.exit_terminal}</td>
+                        <td>{flights.entry_terminal}</td>
                         <td>
                             <EditFlight flights={flights} />
                         </td>

@@ -9,15 +9,38 @@ app.use(express.json());
 
 
 //Routes
+//post a booking
+app.post("/book", async (req, res) => {
+    try {
+        console.log("Entered post");
+        const {fname, lname, seat_type} = req.body;
+        const newBook = await pool.query(
+            "INSERT INTO book (fname, lname, seat_type) VALUES ($1, $2, $3) RETURNING *",
+            [fname, lname, seat_type]
+        );
+        res.json(newBook.rows[0]);
+        console.log("Post Completed.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+//get a booking
+app.get("/book", async (req, res) => {
+    try {
+        const allBook = await pool.query("SELECT * FROM book");
+        res.json(allBook.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
 
 // //Create flight
 app.post("/flight", async (req, res) => {
     try {
-        const { description } = req.body;
-        console.log(description)
+        var data = req.body;
         const newFlight = await pool.query(
-            "INSERT INTO flights (description) VALUES($1) RETURNING *",
-            [description]
+            "INSERT INTO flights (schedule, destination, origin, airline, exit_terminal, entry_terminal) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+            [data.schedule, data.destination, data.origin, data.airline, data.exitTerminal, data.entryTerminal]
         );
 
         res.json(newFlight.rows[0]);
@@ -54,9 +77,9 @@ app.get("/flight/:id", async (req, res) => {
 app.put("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { description } = req.body;
-        const updateFlight = await pool.query("UPDATE flights SET description = $1 WHERE flight_id = $2",
-            [description, id]
+        var data = req.body;
+        const updateFlight = await pool.query("UPDATE flights SET schedule = $1, destination = $2, origin = $3, airline = $4, exit_terminal = $5, entry_terminal = $6 WHERE flight_id = $7",
+        [data.schedule, data.destination, data.origin, data.airline, data.exitTerminal, data.entryTerminal, id]
         );
 
         res.json("Flight was updated!");
@@ -69,7 +92,6 @@ app.put("/flight/:id", async (req, res) => {
 app.delete("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { description } = req.body;
         const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
             [id]
         );
@@ -198,6 +220,7 @@ app.delete("/baggage/:id", async (req, res) => {
 // //Create user
 app.post("/user", async (req, res) => {
     try {
+        console.log("user about to be created");
         var data = req.body;
         const newUser = await pool.query(
             "INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
@@ -223,7 +246,10 @@ app.get("/user", async (req, res) => {
 // //Get a user
 app.get("/user/:id", async (req, res) => {
     try {
+        console.log("about to get specific user");
         const { id } = req.params;
+        console.log("user_id = ");
+        console.log(id);
         const user = await pool.query("SELECT * FROM users WHERE user_id = $1", 
             [id]
         );
@@ -234,15 +260,16 @@ app.get("/user/:id", async (req, res) => {
     }
 })
 
-// Get a user's user_id from email
-app.get("/useridfromemail/:email", async (req, res) => {
+// Get a user's user_id from phone number
+app.get("/useridfromphone/:number", async (req, res) => {
     try {
         console.log("In useridfromemail");
-        const { email } = req.params;
-        console.log(email);
-        const user_id = await pool.query("SELECT user_id FROM users WHERE email = $1",
-            [email]
+        const { number } = req.params;
+        console.log(number);
+        const user_id = await pool.query("SELECT user_id FROM users WHERE phone_number = $1",
+            [number]
         );
+        res.json(user_id);
     } catch (err) {
         console.error(err.message);
     }

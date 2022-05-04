@@ -2,10 +2,10 @@ import React, { Fragment } from 'react';
 import NavBar from './NavBar.js'
 
 import InputFlight from "./sqlComponents/InputFlight";
-import ListFlight from "./sqlComponents/ListAdminFlight";
+import UserListFlight from "./sqlComponents/ListUserFlight";
 import EditFlight from "./sqlComponents/EditFlight";
 
-const Flight = () => {
+const UserFlight = () => {
 
   return (
     <div>
@@ -14,8 +14,7 @@ const Flight = () => {
       <h1>Look at Flights</h1>
       <Fragment> 
         <div className="container">
-          <InputFlight/>
-          <ListFlight/>
+          <UserListFlight/>
         </div>
       </Fragment>
       
@@ -23,4 +22,4 @@ const Flight = () => {
   )
 }
 
-export default Flight
+export default UserFlight

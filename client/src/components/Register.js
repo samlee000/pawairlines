@@ -31,7 +31,8 @@ export const Register = () => {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(body)
       });
-
+      console.log("register user id");
+      console.log(response);
       await createUser(email, password);
       // navigate('/book')
       window.location = "/book";

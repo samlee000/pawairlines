@@ -1,15 +1,15 @@
 import React, { Fragment, useEffect, useState, useContext } from "react";
-import { UserAuth } from '../../context/AuthContext.js';
+import { UserAuth } from "../../context/AuthContext.js";
 
 const ListAdminBill = () => {
-
     const [bill, setBill] = useState([]);
-    const { email } = UserAuth();
+
 
     const getBill = async () => {
         try {
-            console.log("ListUserBill");
-            console.log(email);
+            // console.log("ListUserBill");
+            // console.log(user_email);
+            // console.log(user_id)
             // var user_id = user.user_id;
             
             // console.log(user_id);
@@ -24,8 +24,8 @@ const ListAdminBill = () => {
             // console.log("user_id_json");
             // console.log(user_id_json);
             // setUserID(jsonData.user_id)
-            const user_id_encoded = encodeURIComponent(email);
-            const response = await fetch(`http://localhost:4000/user_id/${user_id_encoded}`);
+            const user_id_encoded = encodeURIComponent(2);
+            const response = await fetch(`http://localhost:4000/user_bill/${user_id_encoded}`);
             const jsonData = await response.json();
             console.log("jsonData:");
             console.log(jsonData);

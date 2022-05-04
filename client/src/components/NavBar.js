@@ -28,8 +28,8 @@ const NavBar = () => {
             <Nav className="me-auto">
               <Nav.Link href="book">Book A Flight</Nav.Link>
               <Nav.Link href="membership">Membership</Nav.Link>
-              <Nav.Link href="flight">Flight Status</Nav.Link>
-              <Nav.Link href="admin_bill">Admin Billing</Nav.Link>
+              <Nav.Link href="userflight">Flight Status</Nav.Link>
+              <Nav.Link href="flight">Enter Flights</Nav.Link>
               <Nav.Link href="user_bill">User Billing</Nav.Link>
               <Nav.Link href="baggage">Baggage</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">

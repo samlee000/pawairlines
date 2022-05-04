@@ -39,6 +39,7 @@ const ListAdminBill = () => {
             <thead>
             <tr>
                 <th>User ID</th>
+                <th>Flight ID</th>
                 <th>Routing Number</th>
                 <th>Subtotal</th>
                 <th>Total</th>
@@ -50,6 +51,7 @@ const ListAdminBill = () => {
                 {bill.map(bills => (
                     <tr key={bills.bill_id}>
                         <td>{bills.user_id}</td>
+                        <td>{bills.flight_id}</td>
                         <td>{bills.routing_no}</td>
                         <td>{bills.subtotal}</td>
                         <td>{bills.total}</td>
