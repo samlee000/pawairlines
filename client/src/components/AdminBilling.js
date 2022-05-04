@@ -66,7 +66,7 @@ export const AdminBilling = () => {
 
 
       {/* Write Code Here */}
-      <h1>Bill Something</h1>
+      {/* <h1>Bill Something</h1> */}
       <Fragment>
         <div className="container">
           <InputBill />

@@ -60,6 +60,7 @@ const Account = () => {
         console.error(err.message);
     }
   };
+  // console.log("users", users);
 
   useEffect(() => {
     getUser();

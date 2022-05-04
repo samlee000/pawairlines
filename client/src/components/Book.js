@@ -38,6 +38,12 @@ export const Book = () => {
         body: JSON.stringify({ fname, lname, seat_type, flight_id, price, user_id})
       });
 
+      const response1 = await fetch("http://localhost:4000/seat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ flight_id, user_id, seat_type, price})
+      });
+
       // navigate('/seat');
       window.location = "/seat";
       { }
@@ -46,21 +52,21 @@ export const Book = () => {
     }
   };
 
-  const onSubmitForm1 = async e => {
-    try {
-      const response1 = await fetch("http://localhost:4000/seat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ flight_id, user_id, seat_type, price})
-      });
+  // const onSubmitForm1 = async e => {
+  //   try {
+  //     const response1 = await fetch("http://localhost:4000/seat", {
+  //       method: "POST",
+  //       headers: { "Content-Type": "application/json" },
+  //       body: JSON.stringify({ flight_id, user_id, seat_type, price})
+  //     });
 
-      // navigate('/seat');
-      // window.location = "/seat";
-      { }
-    } catch (err) {
-      console.error(err.message);
-    }
-  };
+  //     // navigate('/seat');
+  //     // window.location = "/seat";
+  //     { }
+  //   } catch (err) {
+  //     console.error(err.message);
+  //   }
+  // };
 
 
   let optionFlights = flights.map(flight => (
@@ -118,7 +124,7 @@ export const Book = () => {
       <header className="App-header">
         <h1 className="mb-4">Book Your Flight</h1>
         <Fragment>
-          <form className="mt-3 mb-5" onSubmit={onSubmitForm & onSubmitForm1}>
+          <form className="mt-3 mb-5" onSubmit={onSubmitForm}>
             {/* <div class="form-group">
               <label>First Name</label>
               <input type="text" class="form-control" placeholder="John" value={fname} onChange={e => setFName(e.target.value)} />
