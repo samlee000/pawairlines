@@ -10,6 +10,46 @@ app.use(express.json());
 
 //Routes
 
+//post a booking
+app.post("/book", async (req, res) => {
+    try {
+        console.log("Entered post");
+        const {fname, lname, seat_type} = req.body;
+        const newBook = await pool.query(
+            "INSERT INTO book (fname, lname, seat_type) VALUES ($1, $2, $3) RETURNING *",
+            [fname, lname, seat_type]
+        );
+        res.json(newBook.rows[0]);
+        console.log("Post Completed.");
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+//get a booking
+app.get("/book", async (req, res) => {
+    try {
+        const allBook = await pool.query("SELECT * FROM book");
+        res.json(allBook.rows);
+    } catch (err) {
+        console.error(err.message);
+    }
+});
+//delete a booking
+// app.delete("/book/:id", async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const { description } = req.body;
+//         const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
+//             [id]
+//         );
+
+//         res.json("Flight was deleted.");
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// });
+
+
 // //Create flight
 app.post("/flight", async (req, res) => {
     try {
