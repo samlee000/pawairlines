@@ -1,10 +1,10 @@
-import React, { useState, Fragment } from 'react'
+import React, { useState, Fragment, useEffect } from 'react'
 import { Navbar, Container, Nav, NavDropdown, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import { v4 as uuid } from 'uuid';
-//import AdminListFlights from './sqlComponents/AdminListFlights';
+
 
 export const Book = () => {
   const { logout } = UserAuth();
@@ -22,7 +22,7 @@ export const Book = () => {
   const [fname, setFName] = useState("");
   const [lname, setLName] = useState("");
   const [seat_type, setSeatType] = useState("");
-
+  const[flights, setFlights] = useState([]);
   /* add flight id, booking id, departure, arrival */
   const onSubmitForm = async e => {
     try {
@@ -36,6 +36,24 @@ export const Book = () => {
       console.error(err.message);
     }
   };
+  const[flight_id,setFlightID] = useState(null);
+  let optionFlights = flights.map(flight => (
+    <option key={flight.flight_id} value={flight.flight_id}>{flight.flight_id}</option>
+  ));
+  const getFlightList = async () => {
+    try {
+        const response = await fetch("http://localhost:4000/brandon");
+        const jsonData = await response.json();
+
+        setFlights(jsonData);
+    } catch (err) {
+        console.error(err.message);
+    }
+};
+
+  // useEffect(()=> {
+  //   getFlightList();
+  // },[]);
 
   return (
     <div>
@@ -74,6 +92,14 @@ export const Book = () => {
             <div class="form-group">
               <label>Last Name</label>
               <input type="text" class="form-control" placeholder="Doe" value={lname} onChange={e => setLName(e.target.value)} />
+            </div>
+            <div>
+            <h2>Select Flight: 
+                <select className="form-select form-select-lg mb-3 mt-3" value={flight_id} aria-label=".form-select-lg example" onChange={e => { const flight_id = e.target.value; setFlightID(flight_id);}}>
+                  <option value="null"></option>
+                  {optionFlights}
+                </select>
+              </h2>
             </div>
             <div>
               <h1 className="mb-4">Select Your Seat Type</h1>

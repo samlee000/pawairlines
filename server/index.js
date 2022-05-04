@@ -137,6 +137,7 @@ app.post("/brandon", async (req, res) => {
 // //Get all flight
 app.get("/brandon", async (req, res) => {
     try {
+        console.log("i am here");
         const allFlights = await pool.query("SELECT * FROM flights");
         res.json(allFlights.rows);
     } catch (err) {
