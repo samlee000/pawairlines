@@ -13,12 +13,15 @@ export const Book = () => {
   const [lname, setLName] = useState(localStorage.getItem('current_lname'));
   const [seat_type, setSeatType] = useState("");
   const [flights, setFlights] = useState([]);
-  const[bookings, setBookings] = useState([]);
-  const[booking_id, setBookingID] = useState(null);
+  const [bookings, setBookings] = useState([]);
+  const [booking_id, setBookingID] = useState(null);
   const [flight_id, setFlightID] = useState(null);
   const [flight, setFlight] = useState([]);
-  var price = seat_type === 'Economy' ? "$100" : seat_type === 'Business' ? "$200" : "$300";
+  const navigate = useNavigate();
+
+  var price = seat_type === 'Economy' ? "100" : seat_type === 'Business' ? "200" : "300";
   var user_id = localStorage.getItem('current_user_id');
+
   /* add flight id, booking id, departure, arrival */
   const onSubmitForm = async e => {
     try {
@@ -27,18 +30,18 @@ export const Book = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fname, lname, seat_type, flight_id, price, user_id})
       });
-
-      const response1 = await fetch("http://localhost:4000/seat", {
+      // console.log(response);
+      await fetch("http://localhost:4000/seat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ flight_id, user_id, seat_type, price})
       });
 
       // navigate('/seat');
-      window.location = "/seat";
-      { }
+      navigate("/seat");
     } catch (err) {
       console.error(err.message);
+      alert(err.message);
     }
   };
 
@@ -104,7 +107,7 @@ export const Book = () => {
             <div>
               <h3>Select Flight:
                 <select className="form-select form-select-lg mb-3 mt-3" value={flight_id} aria-label=".form-select-lg example" onChange={e => { const flight_id = e.target.value; setFlightID(flight_id); }}>
-                  <option value="null"></option>
+                  <option value="#"></option>
                   {optionFlights}
                 </select>
               </h3>

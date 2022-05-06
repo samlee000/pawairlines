@@ -13,14 +13,13 @@ app.use(express.json());
 //post a booking
 app.post("/book", async (req, res) => {
     try {
-        console.log("Entered post");
-        const {fname, lname, seat_type, flight_id, price, user_id} = req.body;
+        var data = req.body;
         const newBook = await pool.query(
             "INSERT INTO book (fname, lname, seat_type, flight_id, price, user_id) VALUES ($1, $2, $3, $4, $5, $6) RETURNING *",
-            [fname, lname, seat_type, flight_id, price, user_id]
+            [data.fname, data.lname, data.seat_type, data.flight_id, data.price, data.user_id]
         );
         res.json(newBook.rows[0]);
-        console.log("Post Completed.");
+        // console.log(newBook.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
@@ -140,13 +139,16 @@ app.delete("/flight/:id", async (req, res) => {
 // //Create a ticket
 app.post("/seat", async (req, res) => {
     try {
-        const { flight_id, user_id, classtype, price } = req.body;
+        var data = req.body;
         const newTicket = await pool.query(
             "INSERT INTO tickets (flight_id, user_id, class, price) VALUES($1, $2, $3, $4) RETURNING *",
-            [flight_id, user_id, classtype, price]
+            [data.flight_id, data.user_id, data.classtype, data.price]
         );
 
         res.json(newTicket.rows[0]);
+        console.log("newTicket=");
+        console.log(newTicket.rows[0]);
+
     } catch (err) {
         console.error(err.message);
     }

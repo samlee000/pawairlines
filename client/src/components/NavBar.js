@@ -28,6 +28,7 @@ const NavBar = () => {
             <Nav className="me-auto">
               <Nav.Link href="user_flights">Available Flights</Nav.Link>
               <Nav.Link href="book">Book A Flight</Nav.Link>
+              <Nav.Link href="seat">Seat Selection</Nav.Link>
               <Nav.Link href="pet">Pet Selection</Nav.Link>
               <Nav.Link href="baggage">Baggage</Nav.Link>
               <Nav.Link href="user_ticket">User Tickets</Nav.Link>

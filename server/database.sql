@@ -48,5 +48,15 @@ CREATE TABLE users(
     phone_number VARCHAR(255)
 );
 
+CREATE TABLE book(
+    booking_id SERIAL PRIMARY KEY,
+    flight_id SERIAL,
+    fname VARCHAR(255),
+    lname VARCHAR(255),
+    seat_type VARCHAR(255),
+    price DECIMAL(50, 2),
+    user_id SERIAL
+);
+
 INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) 
 VALUES ('Sam', 'Lee', '21', 'Male', 'N/A', 'leesamuel000@tamu.edu', '000-000-0000');
