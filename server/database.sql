@@ -1,3 +1,6 @@
+-- This file contains all of the SQL commands used to create the tables in the local database
+-- Need to be ran before the program can function
+
 CREATE DATABASE pawsairline;
 
 CREATE TABLE flights(

@@ -1,3 +1,17 @@
+/*
+Created by: Prisha
+Edited  by: Nick
+
+Description:
+
+
+Nick's edits: Fixed bug in onSubmitForm so no more fetch errors are created. 
+Also added in two more fetch commands in there for automatic ticket and billing creation when a new booking is made.
+
+
+
+*/
+
 import React, { useState, Fragment, useEffect } from 'react'
 import { Button, Container, Nav, NavDropdown, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -29,21 +43,37 @@ export const Book = () => {
 
   /* add flight id, booking id, departure, arrival */
   const onSubmitForm = async e => {
+    e.preventDefault();
     try {
-      const response = await fetch("http://localhost:4000/book", {
+        // Create a new book entry
+        const response = await fetch(`http://localhost:4000/book`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ fname, lname, seat_type, flight_id, price, user_id})
       });
-      // console.log(response);
-      const response1 = await fetch("http://localhost:4000/seat", {
+      // create a new bill entry
+      var subtotal = price;
+      const response2 = await fetch(`http://localhost:4000/admin_bill`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ flight_id, user_id, seat_type, price})
+        body: JSON.stringify({ subtotal, user_id, flight_id })
       });
-
+      const billJsonData = await response2.json();
+      // console.log(billJsonData);
+      // create a new ticket entry 
+      var bill_id = billJsonData.bill_id;
+      // console.log(bill_id);
+      // alert("Pause");
+      const response1 = await fetch(`http://localhost:4000/seat`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ flight_id, user_id, seat_type, price, bill_id })
+      });
+      
+      // alert("second post done");
+      // second_flag = true;
       // navigate('/seat');
-      navigate("/seat");
+      window.location = "/seat";
     } catch (err) {
       console.error(err.message);
       alert(err.message);

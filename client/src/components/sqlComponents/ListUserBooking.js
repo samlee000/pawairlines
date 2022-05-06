@@ -12,6 +12,7 @@ const ListUserBooking = () => {
             });
 
             setBook(book.filter(books => books.bookingid !== id));
+            window.location = "/mybookings";
         } catch (err) {
             console.error(err.message);
         }
@@ -59,7 +60,7 @@ const ListUserBooking = () => {
                         <td>{books.flight_id}</td>
                         <td>{books.price}</td>
                         <td>
-                            <button className="btn btn-danger" onClick={() => deleteBook(books.bookingid, books.flight_id)}>Delete</button>
+                            <button className="btn btn-danger" onClick={() => deleteBook(books.booking_id, books.flight_id)}>Delete</button>
                         </td>
                     </tr>
                 ))}

@@ -20,7 +20,6 @@ app.post("/book", async (req, res) => {
             [data.fname, data.lname, data.seat_type, data.flight_id, data.price, data.user_id]
         );
         res.json(newBook.rows[0]);
-        // console.log(newBook.rows[0]);
     } catch (err) {
         console.error(err.message);
     }
@@ -55,9 +54,8 @@ app.get("/book/:id", async (req, res) => {
 app.delete("/book/:id/:id2", async (req, res) => {
     try {
         const { id, id2 } = req.params;
-        // console.log(id, id2)
         const { description } = req.body;
-        const deleteFlight = await pool.query("DELETE FROM book WHERE bookingid = $1 AND flight_id = $2",
+        const deleteFlight = await pool.query("DELETE FROM book WHERE booking_id = $1 AND flight_id = $2",
             [id, id2]
         );
 
@@ -73,14 +71,11 @@ app.post("/seat", async (req, res) => {
     try {
         var data = req.body;
         const newTicket = await pool.query(
-            "INSERT INTO tickets (flight_id, user_id, class, price) VALUES($1, $2, $3, $4) RETURNING *",
-            [data.flight_id, data.user_id, data.classtype, data.price]
+            "INSERT INTO tickets (flight_id, user_id, class, price, bill_id, pet_co) VALUES($1, $2, $3, $4, $5, $6) RETURNING *",
+            [data.flight_id, data.user_id, data.seat_type, data.price, data.bill_id, false]
         );
 
         res.json(newTicket.rows[0]);
-        // console.log("newTicket=");
-        // console.log(newTicket.rows[0]);
-
     } catch (err) {
         console.error(err.message);
     }
@@ -410,33 +405,6 @@ app.get("/user/:id", async (req, res) => {
     }
 })
 
-// //Get a user by email
-// app.get("/useremail", async (req, res) => {
-//     try {
-//         const { email } = req.body;
-//         const userOne = await pool.query(`SELECT * FROM users WHERE user_email = 'quyen@gmail.com'`
-//         );
-
-//         res.json(userOne.rows[0]);
-//     } catch (err) {
-//         console.error(err.message);
-//     }
-// })
-
-// //Get a user by email
-// app.get("/user/:name", async (req, res) => {
-//     try {
-//         const { name } = req.body;
-//         const userOne = await pool.query(`SELECT * FROM users WHERE first_name = $1`,
-//             [name]
-//         );
-
-//         res.json(userOne.rows[0]);
-//     } catch (err) {
-//         console.error(err.message);
-//     }
-// })
-
 // //Update a user
 app.put("/user/:id", async (req, res) => {
     try {
@@ -474,8 +442,8 @@ app.post("/admin_bill", async (req, res) => {
         var data = req.body;
         var total = parseFloat(data.subtotal) * 1.1;
         const newBill = await pool.query(
-            "INSERT INTO billing (subtotal, total, user_id) VALUES($1, $2, $3) RETURNING *",
-            [data.subtotal, total, data.user_id]
+            "INSERT INTO billing (subtotal, total, user_id, flight_id) VALUES($1, $2, $3, $4) RETURNING *",
+            [data.subtotal, total, data.user_id, data.flight_id]
         );
 
         res.json(newBill.rows[0]);
@@ -609,10 +577,6 @@ app.put("/ticket/:id", async (req, res) => {
     try {
         const { id } = req.params;
         var data = req.body;
-        // console.log(data);
-        // data.user_id = 2;
-        // data.bill_id = 4;
-        // data.flight_id = 5;
         const newBill = await pool.query(
             "UPDATE tickets SET flight_id = $1, user_id = $2, bill_id = $3, seat_number = $4, class = $5, pet_co = $6, price = $7 WHERE ticket_id = $8",
             [data.flight_id, data.user_id, 4, data.seat_number, data.user_class, data.pet_co, data.price, id]

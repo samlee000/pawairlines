@@ -43,6 +43,7 @@ const InputTicket = () => {
     }
 
     const pushNewTicket = async e => {
+        e.preventDefault();
         try {
             const json_response = await getFlightPrice(flight_id);
             console.log(json_response);

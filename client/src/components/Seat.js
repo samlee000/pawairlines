@@ -1,3 +1,16 @@
+/*
+Created by: 
+Edited  by: Nick Robert
+
+Description:
+
+
+
+Nick's edits: Added NavBar import and fixed bugs related to the POST fetch functions
+
+*/
+
+
 import React, { useState, useEffect } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
@@ -70,7 +83,6 @@ const Seat = ( ticket ) => {
   const [ ticket_id, setticket_id ] = useState(null);
 
     const updateSeat = async () => {
-        // e.preventDefault();
         try {
           console.log({ticket_id})
             const body = { seat_number };

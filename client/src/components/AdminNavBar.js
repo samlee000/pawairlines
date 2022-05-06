@@ -1,3 +1,15 @@
+/*
+Created by: Sam Lee
+Edited  by: Nick Robert
+
+Description:
+
+The content in this file was first made by Sam. Originally, the code was copy/pasted through all the files that needed it, 
+but Nick created this file that every other file that needs this NavBar version could import so that any changes that needed
+to be made only had to be made in one place instead of several.
+
+*/
+
 import React from "react";
 import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';

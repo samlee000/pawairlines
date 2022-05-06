@@ -6,20 +6,6 @@ import ListUserBooking from './sqlComponents/ListUserBooking';
 import NavBar from "./NavBar";
 
 export const MyBooking = () => {
-    const { logout } = UserAuth();
-    const navigate = useNavigate();
-    
-    const handleLogout = async () => {
-        try {
-        await logout();
-        navigate('/');
-        console.log('You are logged out')
-        } catch (e) {
-        console.log(e.message);
-        }
-    };
-
-
   return (
     <div>
       <NavBar />

@@ -1,11 +1,19 @@
+/*
+Created by: Nick Robert
+Edited  by: 
+
+Description:
+
+The following file and the files it imports from sqlComponents handle the admin-side functionality related to billing. 
+It allows admins to insert, edit, and delete all open bills.
+
+Fulfills the admin-side of the finance and refunds feature set.
+
+*/
 import React, { useState, useEffect, Fragment } from 'react';
-import { Navbar, Container, Nav, NavDropdown } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { useNavigate } from 'react-router-dom';
-import { UserAuth } from '../context/AuthContext';
 // import NavBar from './NavBar.js'
 import InputBill from './sqlComponents/InputBillAdmin.js'
-import EditBill from './sqlComponents/EditBill.js'
 import ListAdminBill from './sqlComponents/ListAdminBill.js'
 import AdminNavBar from "./AdminNavBar";
 

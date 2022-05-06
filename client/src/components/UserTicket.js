@@ -2,7 +2,10 @@
 
 Programmed by: Nick Robert
 
-Description: 
+Description:
+
+This file lists all the tickets currently owned by a user account.
+It fulfills the user-side for the ticket pricing feature set and the ticket table.
 
 */
 

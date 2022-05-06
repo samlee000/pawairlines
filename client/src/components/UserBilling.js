@@ -1,4 +1,13 @@
-// import NavBar from './NavBar.js'
+/*
+Created by: Nick Robert
+Edited  by: 
+
+Description:
+
+This file fulfills the user-side for the billing table. It allows users to see only the bills related to their user account.
+This file also fulfills the user-side for the finance and refunds feature set.
+
+*/
 import React, { useState, useEffect, Fragment } from 'react';
 import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';

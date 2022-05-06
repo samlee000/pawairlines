@@ -1,8 +1,12 @@
 /*
 
-Programmed by: Nick Robert
+Created by: Nick Robert
+Edited  by: 
 
 Description: 
+
+This file fulfills the admin-functions related to the tickets table. 
+It allows admins to insert, edit, and delete tickets.
 
 */
 
