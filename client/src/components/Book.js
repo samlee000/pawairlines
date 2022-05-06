@@ -1,10 +1,11 @@
 import React, { useState, Fragment, useEffect } from 'react'
-import { Navbar, Container, Nav, NavDropdown, Card } from 'react-bootstrap';
+import { Button, Container, Nav, NavDropdown, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 
 import NavBar from "./NavBar";
+import Flights from './Flights';
 
 
 export const Book = () => {
@@ -17,9 +18,13 @@ export const Book = () => {
   const [booking_id, setBookingID] = useState(null);
   const [flight_id, setFlightID] = useState(null);
   const [flight, setFlight] = useState([]);
+  const [economy_price, setEcoPrice] = useState();
+  const [business_price, setBusPrice] = useState();
+  const [firstclass_price, setFCPrice] = useState();
   const navigate = useNavigate();
 
-  var price = seat_type === 'Economy' ? "100" : seat_type === 'Business' ? "200" : "300";
+  var price = seat_type === 'Economy' ? economy_price : seat_type === 'Business' ? business_price : firstclass_price;
+
   var user_id = localStorage.getItem('current_user_id');
 
   /* add flight id, booking id, departure, arrival */
@@ -61,6 +66,20 @@ export const Book = () => {
   //   }
   // };
 
+  const onFlightIDChange = async () => {
+    try {
+      for (var i = 0; i < flights.length; i++) {
+        if (flights[i].flight_id == flight_id) {
+          setEcoPrice(flights[i].economy_price);
+          setBusPrice(flights[i].business_price);
+          setFCPrice(flights[i].firstclass_price);
+        }
+      }
+    } catch (err) {
+      console.error(err.message);
+    }
+  }
+
 
   let optionFlights = flights.map(flight => (
     <option key={flight.flight_id} value={flight.flight_id}>{flight.flight_id}</option>
@@ -85,11 +104,8 @@ export const Book = () => {
 
   // Update the ticket prices depending on what the current flight_id is since each flight has different prices for the different classes
   useEffect(() => {
-
-  });
-
-  console.log(localStorage.getItem('current_user_id'));
-  console.log(localStorage.getItem('current_fname'));
+    onFlightIDChange();
+  }, [flight_id]);
 
   return (
     <div>
@@ -124,7 +140,7 @@ export const Book = () => {
                   <div className="container">
                     <div className='row'>
                       <div className='numone col-4'>
-                        <Card className='card1 h-100' value={seat_type} onClick={() => setSeatType("Economy")}>
+                        <Card className='card1 h-100' type="button" value={seat_type} onClick={() => setSeatType("Economy")}>
                           <Card.Body>
 
                             <h5 className='cart-title'>Economy Class</h5>
@@ -133,7 +149,7 @@ export const Book = () => {
                         </Card>
                       </div>
                       <div className='numtwo col-4'>
-                        <Card className='card2 h-100' value={seat_type} onClick={() => setSeatType("Business")}>
+                        <Card className='card2 h-100' type="button" value={seat_type} onClick={() => setSeatType("Business")}>
                           <Card.Body>
 
                             <h5 className='cart-title'>Business Class</h5>
@@ -142,7 +158,7 @@ export const Book = () => {
                         </Card>
                       </div>
                       <div className='numthree col-4'>
-                        <Card className='card3 h-100' value={seat_type} onClick={() => setSeatType("First")}>
+                        <Card className='card3 h-100' type="button" value={seat_type} onClick={() => setSeatType("First")}>
                           <Card.Body>
                             <h5 className='cart-title'>First Class</h5>
                             <p className='card-text'>The smallest size available on all flights.</p>
@@ -165,7 +181,9 @@ export const Book = () => {
                 <h3 className='mt-3'>Selected Seat Type: {seat_type}</h3>
                 <h3 className='mt-3'>Total Amount: {price}</h3>
               </Card>
-              <button className="btn btn-success">Confirm and Proceed to Seat Selection</button>
+              <div className="btn-group d-flex mt-3 mb-2" role="group" aria-label="...">
+                <Button className="loginButton mt-3 btn-block  w-90" variant="primary" type="submit"> Confirm and Proceed to Seat Selection </Button>
+            </div>
             </div>
           </form>
           {/* <div><button className="btn btn-danger" onClick={() => deleteBooking(bookings.flight_id)}>Cancel Booking</button></div> */}
