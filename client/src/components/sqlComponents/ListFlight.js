@@ -6,18 +6,6 @@ const ListFlight = () => {
 
     const [flight, setFlight] = useState([]);
 
-    const deleteFlight = async (id) => {
-        try {
-            const deleteFLight = await fetch(`http://localhost:4000/flight/${id}`, {
-                method: "DELETE"
-            });
-
-            setFlight(flight.filter(flights => flights.flight_id !== id));
-        } catch (err) {
-            console.error(err.message);
-        }
-    };
-
     const getFlight = async () => {
         try {
             const response = await fetch("http://localhost:4000/flight");
@@ -38,21 +26,23 @@ const ListFlight = () => {
         <table class="table">
             <thead>
             <tr>
-                <th>Description</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Flight ID</th>
+                <th>Origin</th>
+                <th>Destination</th>
+                <th>Airline</th>
+                <th>Departure</th>
+                <th>Plane ID</th>
             </tr>
             </thead>
             <tbody>
                 {flight.map(flights => (
                     <tr key={flights.flight_id}>
-                        <td>{flights.description}</td>
-                        <td>
-                            <EditFlight flights={flights} />
-                        </td>
-                        <td>
-                            <button className="btn btn-danger" onClick={() => deleteFlight(flights.flight_id)}>Delete</button>
-                        </td>
+                        <td>{flights.flight_id}</td>
+                        <td>{flights.origin}</td>
+                        <td>{flights.destination}</td>
+                        <td>{flights.airline}</td>
+                        <td>{flights.departure}</td>
+                        <td>{flights.plane_id}</td>
                     </tr>
                 ))}
             </tbody>

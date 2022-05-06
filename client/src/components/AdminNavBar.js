@@ -27,11 +27,11 @@ const AdminNavBar = () => {
           <Navbar.Collapse id="basic-navbar-nav">
             <Nav className="me-auto">
               <Nav.Link href="admin_account">Account</Nav.Link>
-              <Nav.Link href="admin_flights">All Flights</Nav.Link>
-              <Nav.Link href="admin_ticket">All Tickets</Nav.Link>
-              <Nav.Link href="admin_users">All Users</Nav.Link>
+              <Nav.Link href="admin_flights">Edit Flights</Nav.Link>
+              <Nav.Link href="admin_ticket">Edit Tickets</Nav.Link>
+              <Nav.Link href="admin_users">Edit Users</Nav.Link>
               {/* <Nav.Link href="admin_planes">All Planes</Nav.Link> */}
-              <Nav.Link href="admin_bill">All Bills</Nav.Link>
+              <Nav.Link href="admin_bill">Edit Bills</Nav.Link>
               <NavDropdown title="Logout" id="basic-nav-dropdown">
                 <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
               </NavDropdown>

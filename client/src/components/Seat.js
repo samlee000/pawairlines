@@ -6,22 +6,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "./Seat.css";
 import { MdOutlineChair, MdChair } from 'react-icons/md';
 // import EditSeat from "./sqlComponents/EditSeat";
+import NavBar from "./NavBar";
 
 
 const Seat = ( ticket ) => {
-    const { logout } = UserAuth();
-    const navigate = useNavigate();
-    
-    const handleLogout = async () => {
-        try {
-        await logout();
-        navigate('/');
-        console.log('You are logged out')
-        } catch (e) {
-        console.log(e.message);
-        }
-    };
-
     const False = MdChair
     //<MdOutlineChair  size={70}/>
     const [ outline1, setOutline1 ] = useState(true);
@@ -122,26 +110,7 @@ const Seat = ( ticket ) => {
 
   return (
     <div>
-      <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
-        <Container >
-          <Navbar.Brand > Paw Airlines </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="account">My Account</Nav.Link>
-              <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="pet">Pet Selection</Nav.Link>
-              <Nav.Link href="seat">Seat Selection</Nav.Link>
-              <Nav.Link href="baggage">Baggage</Nav.Link>
-              <Nav.Link href="mybookings">My Bookings</Nav.Link>
-              <Nav.Link href="user_bill">User Billing</Nav.Link>
-              <NavDropdown title="Logout" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavBar />
 
       <header className="App-header">
 

@@ -11,8 +11,6 @@ const ListUserBill = () => {
             const user_id_encoded = localStorage.getItem('current_user_id');
             const response = await fetch(`http://localhost:4000/user_bill/${user_id_encoded}`);
             const jsonData = await response.json();
-            console.log("jsonData:");
-            console.log(jsonData);
             setBill(jsonData);
         } catch (err) {
             console.error(err.message);

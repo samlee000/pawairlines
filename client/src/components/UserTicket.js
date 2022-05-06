@@ -12,22 +12,20 @@ import AdminNavBar from "./AdminNavBar";
 import NavBar from "./NavBar";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import InputTicket from "./sqlComponents/InputTicket";
-import ListTicket from "./sqlComponents/ListTicket";
+import ListUserTicket from "./sqlComponents/ListUserTicket";
 
 
-const Ticket = () => {
+const UserTicket = () => {
     return (
         <div>
             <NavBar />
-            <h1 className="mb-4">Edit Tickets </h1>
             <Fragment>
                 <div className="container">
-                    <InputTicket/>
-                    <ListTicket/>
+                    <ListUserTicket/>
                 </div>
             </Fragment>
         </div>
     )
 };
 
-export default Ticket;
+export default UserTicket;

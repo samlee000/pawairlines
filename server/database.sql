@@ -19,6 +19,9 @@ CREATE TABLE tickets(
     class VARCHAR(255),
     pet_carry_on VARCHAR(255),
     price VARCHAR(255)
+    economy_price DECIMAL(50, 2),
+    business_price DECIMAL(50, 2),
+    firstclass_price DECIMAL(50, 2)
 );
 
 CREATE TABLE baggage(
