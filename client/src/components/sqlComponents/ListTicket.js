@@ -44,9 +44,7 @@ const ListTicket = () => {
                 <th>Seat Number</th>
                 <th>Class</th>
                 <th>Pet Carry-on</th>
-                <th>Economy Price</th>
-                <th>Business Price</th>
-                <th>First Class Price</th>
+                <th>Price</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -61,9 +59,7 @@ const ListTicket = () => {
                         <td>{tickets.seat_number}</td>
                         <td>{tickets.class}</td>
                         <td>{tickets.pet_co}</td>
-                        <td>{tickets.economy_price}</td>
-                        <td>{tickets.business_price}</td>
-                        <td>{tickets.firstclass_price}</td>
+                        <td>{tickets.price}</td>
                         <td>
                             <EditTicket tickets={tickets}/>
                         </td>

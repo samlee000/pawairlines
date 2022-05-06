@@ -53,7 +53,7 @@ app.get("/book/:id", async (req, res) => {
 app.delete("/book/:id/:id2", async (req, res) => {
     try {
         const { id, id2 } = req.params;
-        console.log(id, id2)
+        // console.log(id, id2)
         const { description } = req.body;
         const deleteFlight = await pool.query("DELETE FROM book WHERE bookingid = $1 AND flight_id = $2",
             [id, id2]
@@ -66,74 +66,74 @@ app.delete("/book/:id/:id2", async (req, res) => {
 });
 
 
-// //Create flight
-app.post("/flight", async (req, res) => {
-    try {
-        const { description } = req.body;
-        const newFlight = await pool.query(
-            "INSERT INTO flights (description) VALUES($1) RETURNING *",
-            [description]
-        );
+// // //Create flight
+// app.post("/flight", async (req, res) => {
+//     try {
+//         const { description } = req.body;
+//         const newFlight = await pool.query(
+//             "INSERT INTO flights (description) VALUES($1) RETURNING *",
+//             [description]
+//         );
 
-        res.json(newFlight.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
+//         res.json(newFlight.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// });
 
-// //Get all flight
-app.get("/flight", async (req, res) => {
-    try {
-        const allFlights = await pool.query("SELECT * FROM flights");
-        res.json(allFlights.rows);
-    } catch (err) {
-        console.error(err.message);
-    }
-});
+// // //Get all flight
+// app.get("/flight", async (req, res) => {
+//     try {
+//         const allFlights = await pool.query("SELECT * FROM flights");
+//         res.json(allFlights.rows);
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// });
 
-// //Get a flight
-app.get("/flight/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const flight = await pool.query("SELECT * FROM flights WHERE flight_id = $1", 
-            [id]
-        );
+// // //Get a flight
+// app.get("/flight/:id", async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const flight = await pool.query("SELECT * FROM flights WHERE flight_id = $1", 
+//             [id]
+//         );
 
-        res.json(flight.rows[0]);
-    } catch (err) {
-        console.error(err.message);
-    }
-})
+//         res.json(flight.rows[0]);
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// })
 
-// //Update a flight
-app.put("/flight/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { description } = req.body;
-        const updateFlight = await pool.query("UPDATE flights SET description = $1 WHERE flight_id = $2",
-            [description, id]
-        );
+// // //Update a flight
+// app.put("/flight/:id", async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const { description } = req.body;
+//         const updateFlight = await pool.query("UPDATE flights SET description = $1 WHERE flight_id = $2",
+//             [description, id]
+//         );
 
-        res.json("Flight was updated!");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
+//         res.json("Flight was updated!");
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// });
 
-// //Delete a flight
-app.delete("/flight/:id", async (req, res) => {
-    try {
-        const { id } = req.params;
-        const { description } = req.body;
-        const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
-            [id]
-        );
+// // //Delete a flight
+// app.delete("/flight/:id", async (req, res) => {
+//     try {
+//         const { id } = req.params;
+//         const { description } = req.body;
+//         const deleteFlight = await pool.query("DELETE FROM flights WHERE flight_id = $1",
+//             [id]
+//         );
 
-        res.json("Flight was deleted.");
-    } catch (err) {
-        console.error(err.message);
-    }
-});
+//         res.json("Flight was deleted.");
+//     } catch (err) {
+//         console.error(err.message);
+//     }
+// });
 
 
 // //Create a ticket
@@ -146,8 +146,8 @@ app.post("/seat", async (req, res) => {
         );
 
         res.json(newTicket.rows[0]);
-        console.log("newTicket=");
-        console.log(newTicket.rows[0]);
+        // console.log("newTicket=");
+        // console.log(newTicket.rows[0]);
 
     } catch (err) {
         console.error(err.message);
@@ -270,14 +270,14 @@ app.delete("/baggage/:id", async (req, res) => {
 
 
 // //Create flight
-app.post("/brandon", async (req, res) => {
+app.post("/flight", async (req, res) => {
     try {
-        const { origin, destination, airline, departure, plane } = req.body;
+        var data = req.body;
         const newFlight = await pool.query(
-            "INSERT INTO flights (origin, destination, airline, departure, plane_id) VALUES ($1, $2, $3, $4, $5) RETURNING *",
-            [origin, destination, airline, departure, plane]
+            "INSERT INTO flights (origin, destination, airline, departure, plane_id, economy_price, business_price, firstclass_price) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING *",
+            [data.origin, data.destination, data.airline, data.departure, data.plane, data.economy_price, data.business_price, data.firstclass_price]
         );
-
+        // console.log(newFlight.rows[0]);
         res.json(newFlight.rows[0]);
     } catch (err) {
         console.error(err.message);
@@ -285,7 +285,7 @@ app.post("/brandon", async (req, res) => {
 });
 
 // //Get all flight
-app.get("/brandon", async (req, res) => {
+app.get("/flight", async (req, res) => {
     try {
         const allFlights = await pool.query("SELECT * FROM flights");
         res.json(allFlights.rows);
@@ -295,13 +295,15 @@ app.get("/brandon", async (req, res) => {
 });
 
 // //Get a flight
-app.get("/brandon/:id", async (req, res) => {
+app.get("/flight/:id", async (req, res) => {
     try {
+        // console.log(cors().)
         const { id } = req.params;
+        // console.log("id=", id);
         const flight = await pool.query("SELECT * FROM flights WHERE flight_id = $1", 
             [id]
         );
-
+        // console.log(flight.rows[0]);
         res.json(flight.rows[0]);
     } catch (err) {
         console.error(err.message);
@@ -309,12 +311,12 @@ app.get("/brandon/:id", async (req, res) => {
 })
 
 // //Update a flight
-app.put("/brandon/:id", async (req, res) => {
+app.put("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
-        const { origin, destination, airline, departure, plane } = req.body;
-        const updateFlight = await pool.query("UPDATE flights SET origin = $1, destination = $2, airline = $3, departure = $4, plane_id = $5 WHERE flight_id = $6",
-            [origin, destination, airline, departure, plane, id]
+        var data = req.body;
+        const updateFlight = await pool.query("UPDATE flights SET origin = $1, destination = $2, airline = $3, departure = $4, plane_id = $5, economy_price = $6, business_price = $7, firstclass_price = $8 WHERE flight_id = $9",
+        [data.origin, data.destination, data.airline, data.departure, data.plane, data.economy_price, data.business_price, data.firstclass_price, id]
         );
 
         res.json("Flight was updated!");
@@ -324,7 +326,7 @@ app.put("/brandon/:id", async (req, res) => {
 });
 
 // //Delete a flight
-app.delete("/brandon/:id", async (req, res) => {
+app.delete("/flight/:id", async (req, res) => {
     try {
         const { id } = req.params;
         const { description } = req.body;
@@ -630,9 +632,10 @@ app.post("/ticket", async (req, res) => {
         // data.user_id = 2;
         // data.bill_id = 4;
         // data.flight_id = 5;
+        // console.log(data);
         const newBill = await pool.query(
-            "INSERT INTO tickets (flight_id, user_id, bill_id, seat_number, class, pet_co, economy_price, business_price, firstclass_price) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9) RETURNING *",
-            [data.flight_id, data.user_id, data.bill_id, data.seat_number, data.user_class, data.pet_co, data.economy_price, data.business_price, data.firstclass_price]
+            "INSERT INTO tickets (flight_id, user_id, bill_id, seat_number, class, pet_co, price) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *",
+            [data.flight_id, data.user_id, data.bill_id, data.seat_number, data.user_class, data.pet_co, data.new_price]
         );
 
         res.json(newBill.rows[0]);
@@ -674,14 +677,15 @@ app.put("/ticket/:id", async (req, res) => {
     try {
         const { id } = req.params;
         var data = req.body;
-        data.user_id = 2;
-        data.bill_id = 4;
-        data.flight_id = 5;
+        // console.log(data);
+        // data.user_id = 2;
+        // data.bill_id = 4;
+        // data.flight_id = 5;
         const newBill = await pool.query(
-            "UPDATE tickets SET flight_id = $1, user_id = $2, bill_id = $3, seat_number = $4, class = $5, pet_co = $6, economy_price = $7, business_price = $8, firstclass_price = $9 WHERE ticket_id = $10",
-            [data.flight_id, data.user_id, 4, data.seat_number, data.user_class, data.pet_co, data.economy_price, data.business_price, data.firstclass_price, id]
+            "UPDATE tickets SET flight_id = $1, user_id = $2, bill_id = $3, seat_number = $4, class = $5, pet_co = $6, price = $7 WHERE ticket_id = $8",
+            [data.flight_id, data.user_id, 4, data.seat_number, data.user_class, data.pet_co, data.price, id]
         );
-        console.log(newBill.rows[0]);
+        // console.log(newBill.rows[0]);
         res.json(newBill.rows[0]);
     } catch (err) {
         console.error(err.message);

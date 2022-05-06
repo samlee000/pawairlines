@@ -8,7 +8,7 @@ const AdminListFlights = () => {
 
     const deleteFlight = async (id) => {
         try {
-            const deleteFLight = await fetch(`http://localhost:4000/brandon/${id}`, {
+            const deleteFLight = await fetch(`http://localhost:4000/flight/${id}`, {
                 method: "DELETE"
             });
 
@@ -20,7 +20,7 @@ const AdminListFlights = () => {
 
     const getFlight = async () => {
         try {
-            const response = await fetch("http://localhost:4000/brandon");
+            const response = await fetch("http://localhost:4000/flight");
             const jsonData = await response.json();
 
             setFlight(jsonData);
@@ -39,11 +39,15 @@ const AdminListFlights = () => {
         <table class="table mt-4">
             <thead>
             <tr>
+                <th>Flight ID</th>
                 <th>Origin</th>
                 <th>Destination</th>
                 <th>Airline</th>
                 <th>Departure</th>
                 <th>Plane ID</th>
+                <th>Economy Price</th>
+                <th>Business Price</th>
+                <th>First Class Price</th>
                 <th>Edit</th>
                 <th>Delete</th>
             </tr>
@@ -51,11 +55,15 @@ const AdminListFlights = () => {
             <tbody>
                 {flight.map(flights => (
                     <tr key={flights.flight_id}>
+                        <td>{flights.flight_id}</td>
                         <td>{flights.origin}</td>
                         <td>{flights.destination}</td>
                         <td>{flights.airline}</td>
                         <td>{flights.departure}</td>
                         <td>{flights.plane_id}</td>
+                        <td>{flights.economy_price}</td>
+                        <td>{flights.business_price}</td>
+                        <td>{flights.firstclass_price}</td>
                         <td>
                             <AdminEditFlight flights={flights} />
                         </td>

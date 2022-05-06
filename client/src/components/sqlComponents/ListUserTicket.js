@@ -1,15 +1,14 @@
 import React, { Fragment, useEffect, useState, Button } from "react";
 
-import EditTicket from "./EditTicket";
-
-const ListUserTicket = () => {
+const ListTicket = () => {
 
     const [ticket, setTicket] = useState([]);
     
     const getTickets = async () => {
         try {
-            const user_id_encoded = localStorage.getItem('current_user_id');
-            const response = await fetch(`http://localhost:4000/ticket/${user_id_encoded}`);
+            var user_id = localStorage.getItem("current_user_id");
+            var encoded_user_id = encodeURIComponent(user_id);
+            const response = await fetch(`http://localhost:4000/ticket/${encoded_user_id}`);
             const jsonData = await response.json();
 
             setTicket(jsonData);
@@ -22,18 +21,6 @@ const ListUserTicket = () => {
         getTickets();
     }, []);
 
-    const deleteTicket = async (id) => {
-        try {
-            const deleteTicket = await fetch(`http://localhost:4000/ticket/${id}`, {
-                method: "DELETE"
-            });
-
-            setTicket(ticket.filter(tickets => tickets.ticket_id !== {id}));
-            window.location = "/admin_ticket";
-        } catch (err) {
-            console.error(err.message);
-        }
-    }
     return <Fragment>
         <table className="table">
             <thead>
@@ -45,11 +32,7 @@ const ListUserTicket = () => {
                 <th>Seat Number</th>
                 <th>Class</th>
                 <th>Pet Carry-on</th>
-                <th>Economy Price</th>
-                <th>Business Price</th>
-                <th>First Class Price</th>
-                <th>Edit</th>
-                <th>Delete</th>
+                <th>Price</th>
             </tr>
             </thead>
             <tbody>
@@ -62,15 +45,7 @@ const ListUserTicket = () => {
                         <td>{tickets.seat_number}</td>
                         <td>{tickets.class}</td>
                         <td>{tickets.pet_co}</td>
-                        <td>{tickets.economy_price}</td>
-                        <td>{tickets.business_price}</td>
-                        <td>{tickets.firstclass_price}</td>
-                        <td>
-                            <EditTicket tickets={tickets}/>
-                        </td>
-                        <td>
-                            <button className="btn btn-danger" onClick={() => deleteTicket(tickets.ticket_id)}>Delete</button>
-                        </td>
+                        <td>{tickets.price}</td>
                     </tr>
                 ))}
             </tbody>
@@ -78,4 +53,4 @@ const ListUserTicket = () => {
     </Fragment>
 }
 
-export default ListUserTicket;
+export default ListTicket;

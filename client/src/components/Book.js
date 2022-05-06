@@ -31,7 +31,7 @@ export const Book = () => {
         body: JSON.stringify({ fname, lname, seat_type, flight_id, price, user_id})
       });
       // console.log(response);
-      await fetch("http://localhost:4000/seat", {
+      const response1 = await fetch("http://localhost:4000/seat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ flight_id, user_id, seat_type, price})
@@ -67,7 +67,7 @@ export const Book = () => {
   ));
   const getFlightList = async () => {
     try {
-      const response = await fetch("http://localhost:4000/brandon");
+      const response = await fetch("http://localhost:4000/flight");
       const jsonData = await response.json();
 
       setFlights(jsonData);
@@ -82,6 +82,11 @@ export const Book = () => {
     getFlightList();
     // getBookings();
   }, []);
+
+  // Update the ticket prices depending on what the current flight_id is since each flight has different prices for the different classes
+  useEffect(() => {
+
+  });
 
   console.log(localStorage.getItem('current_user_id'));
   console.log(localStorage.getItem('current_fname'));

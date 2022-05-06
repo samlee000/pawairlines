@@ -2,12 +2,14 @@ CREATE DATABASE pawsairline;
 
 CREATE TABLE flights(
     flight_id SERIAL PRIMARY KEY, 
-    description VARCHAR(255),
     origin VARCHAR(255),
     destination VARCHAR(255),
     airline VARCHAR(255),
     departure VARCHAR(255),
-    plane_id VARCHAR(255)
+    plane_id VARCHAR(255),
+    economy_price DECIMAL(50, 2),
+    business_price DECIMAL(50, 2),
+    firstclass_price DECIMAL(50, 2)
 );
 
 CREATE TABLE tickets(
@@ -17,11 +19,8 @@ CREATE TABLE tickets(
     bill_id VARCHAR(255),
     seat_number VARCHAR(255),
     class VARCHAR(255),
-    pet_carry_on VARCHAR(255),
+    pet_co VARCHAR(255),
     price VARCHAR(255)
-    economy_price DECIMAL(50, 2),
-    business_price DECIMAL(50, 2),
-    firstclass_price DECIMAL(50, 2)
 );
 
 CREATE TABLE baggage(
@@ -50,12 +49,21 @@ CREATE TABLE users(
 
 CREATE TABLE book(
     booking_id SERIAL PRIMARY KEY,
-    flight_id SERIAL,
     fname VARCHAR(255),
     lname VARCHAR(255),
     seat_type VARCHAR(255),
+    flight_id SERIAL,
     price DECIMAL(50, 2),
     user_id SERIAL
+);
+
+CREATE TABLE billing(
+    bill_id SERIAL PRIMARY KEY,
+    user_id SERIAL,
+    flight_id SERIAL,
+    routing_no SERIAL,
+    subtotal DECIMAL(50, 2),
+    total DECIMAL(50, 2)
 );
 
 INSERT INTO users (first_name, last_name, age, gender, user_address, user_email, phone_number) 

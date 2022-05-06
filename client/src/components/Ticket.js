@@ -18,7 +18,7 @@ import ListTicket from "./sqlComponents/ListTicket";
 const Ticket = () => {
     return (
         <div>
-            <NavBar />
+            <AdminNavBar />
             <h1 className="mb-4">Edit Tickets </h1>
             <Fragment>
                 <div className="container">

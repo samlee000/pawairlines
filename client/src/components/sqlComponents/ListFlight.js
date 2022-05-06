@@ -32,6 +32,9 @@ const ListFlight = () => {
                 <th>Airline</th>
                 <th>Departure</th>
                 <th>Plane ID</th>
+                <th>Economy Price</th>
+                <th>Business Price</th>
+                <th>First Class Price</th>
             </tr>
             </thead>
             <tbody>
@@ -43,6 +46,9 @@ const ListFlight = () => {
                         <td>{flights.airline}</td>
                         <td>{flights.departure}</td>
                         <td>{flights.plane_id}</td>
+                        <td>{flights.economy_price}</td>
+                        <td>{flights.business_price}</td>
+                        <td>{flights.firstclass_price}</td>
                     </tr>
                 ))}
             </tbody>
