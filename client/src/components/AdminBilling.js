@@ -7,21 +7,9 @@ import { UserAuth } from '../context/AuthContext';
 import InputBill from './sqlComponents/InputBillAdmin.js'
 import EditBill from './sqlComponents/EditBill.js'
 import ListAdminBill from './sqlComponents/ListAdminBill.js'
-
+import AdminNavBar from "./AdminNavBar";
 
 export const AdminBilling = () => {
-    const { logout } = UserAuth();
-    const navigate = useNavigate();
-    
-    const handleLogout = async () => {
-        try {
-        await logout();
-        navigate('/');
-        console.log('You are logged out')
-        } catch (e) {
-        console.log(e.message);
-        }
-    };
 
   const [subtotal, setSubtotal] = useState([]);
 
@@ -42,27 +30,7 @@ export const AdminBilling = () => {
 
   return (
     <div>
-      <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
-        <Container >
-          <Navbar.Brand > Paw Airlines </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              {/* <Nav.Link href="admin_account">Account</Nav.Link> */}
-              <Nav.Link href="admin_flights">All Flights</Nav.Link>
-              <Nav.Link href="admin_users">All Users</Nav.Link>
-              {/* <Nav.Link href="admin_planes">All Planes</Nav.Link> */}
-              <Nav.Link href="admin_bill">All Bills</Nav.Link>
-              <NavDropdown title="Logout" id="basic-nav-dropdown">
-                {/* <NavDropdown.Item href="register">Register</NavDropdown.Item>
-                <NavDropdown.Item href="login">Login</NavDropdown.Item>
-                <NavDropdown.Divider /> */}
-                <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <AdminNavBar />
 
 
       {/* Write Code Here */}

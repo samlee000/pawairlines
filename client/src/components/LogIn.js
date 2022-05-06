@@ -23,14 +23,10 @@ const LogIn = () => {
       navigate('/account')
     } catch (e) {
       setError(e.message)
-      console.log(e.message)
       alert('Incorrect username or password.')
 
     }
   };
-
-  console.log(myContext.current_email);
-
 
   return (
     <div>

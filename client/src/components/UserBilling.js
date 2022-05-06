@@ -4,44 +4,14 @@ import { Navbar, Container, Nav, NavDropdown, Button, Card, Form } from 'react-b
 import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import ListUserBill from './sqlComponents/ListUserBill.js';
+import NavBar from "./NavBar";
+
 
 export const UserBilling = () => {
-    const { logout } = UserAuth();
-    const navigate = useNavigate();
-    
-    const handleLogout = async () => {
-        try {
-        await logout();
-        navigate('/');
-        console.log('You are logged out')
-        } catch (e) {
-        console.log(e.message);
-        }
-    };
-
 
   return (
     <div>
-      <Navbar bg="navbar navbar-dark bg-dark" expand="lg">
-        <Container >
-          <Navbar.Brand > Paw Airlines </Navbar.Brand>
-          <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
-            <Nav className="me-auto">
-              <Nav.Link href="account">My Account</Nav.Link>
-              <Nav.Link href="book">Book A Flight</Nav.Link>
-              <Nav.Link href="pet">Pet Selection</Nav.Link>
-              <Nav.Link href="seat">Seat Selection</Nav.Link>
-              <Nav.Link href="baggage">Baggage</Nav.Link>
-              <Nav.Link href="mybookings">My Bookings</Nav.Link>
-              <Nav.Link href="user_bill">User Billing</Nav.Link>
-              <NavDropdown title="Logout" id="basic-nav-dropdown">
-                <NavDropdown.Item onClick={handleLogout}>Log Out</NavDropdown.Item>
-              </NavDropdown>
-            </Nav>
-          </Navbar.Collapse>
-        </Container>
-      </Navbar>
+      <NavBar />
 
 
       {/* Write Code Here */}

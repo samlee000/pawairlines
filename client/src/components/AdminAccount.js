@@ -4,9 +4,9 @@ import { Link, useNavigate } from 'react-router-dom';
 import { UserAuth } from '../context/AuthContext';
 import AppContext from '../context/AppContext';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import NavBar from "./NavBar";
+import AdminNavBar from "./AdminNavBar";
 
-const Account = () => {
+const AdminAccount = () => {
   const myContext = useContext(AppContext);
 
   const [fname, setFirst_name] = useState("");
@@ -62,7 +62,7 @@ const Account = () => {
 
   return (
     <div>
-      <NavBar />
+      <AdminNavBar />
 
       <header className="App-header">
 
@@ -133,4 +133,4 @@ const Account = () => {
   )
 }
 
-export default Account
+export default AdminAccount
