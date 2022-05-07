@@ -195,6 +195,7 @@ app.delete("/baggage/:id", async (req, res) => {
     }
 });
 
+// BEGIN CONTRIBUTED BY BRANDON NEWMAN
 
 // //Create flight
 app.post("/flight", async (req, res) => {
@@ -364,6 +365,8 @@ app.delete("/pet/:id", async (req, res) => {
         console.error(err.message);
     }
 });
+
+// END CONTRIBUTED BY BRANDON NEWMAN
 
 
 // //Create user
