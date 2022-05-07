@@ -3,7 +3,9 @@ Created by: Prisha
 Edited  by: Nick
 
 Description:
-
+Prisha's Edits: Responsible for adding a new booking, query from book and flights relation
+Make sure of finding the right relations, setting up postgres for book relation 
+On submit form that inserts all query into the relation 
 
 Nick's edits: Fixed bug in onSubmitForm so no more fetch errors are created. 
 Also added in two more fetch commands in there for automatic ticket and billing creation when a new booking is made.
@@ -12,6 +14,7 @@ Also added in two more fetch commands in there for automatic ticket and billing 
 
 */
 
+/* imports here */
 import React, { useState, Fragment, useEffect } from 'react'
 import { Button, Container, Nav, NavDropdown, Card } from 'react-bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';

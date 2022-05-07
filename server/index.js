@@ -9,6 +9,7 @@ app.use(express.json());
 
 
 //Routes
+//Prisha's Feature: Booking 
 
 //post a booking
 app.post("/book", async (req, res) => {
@@ -25,7 +26,7 @@ app.post("/book", async (req, res) => {
     }
 });
 
-//get a booking
+//get a booking - the whole object 
 app.get("/book", async (req, res) => {
     try {
         const allBook = await pool.query("SELECT * FROM book");
@@ -35,7 +36,7 @@ app.get("/book", async (req, res) => {
     }
 });
 
-// Get bookings for current user (user)
+// Get bookings for current user (user) based on user id 
 app.get("/book/:id", async (req, res) => {
     try {
         const { id } = req.params;
